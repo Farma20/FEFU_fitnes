@@ -14,4 +14,5 @@
     <string name="main_menu_near_workout_payment_status_paid">Оплачено</string>
     <string name="main_menu_activity_title">Активность</string>
     <string name="coming_soon">В разработке</string>
+    <string name="timetable_search_hint">Поиск</string>
 </resources>

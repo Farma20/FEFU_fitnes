@@ -13,6 +13,8 @@ import com.example.fefu_fitnes.UI.Models.MainInfo
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.ViewModels.MainMenuViewModel
 
+
+
 class MainMenuFragment: Fragment() {
 
     private lateinit var hostActivity: MainActivity
