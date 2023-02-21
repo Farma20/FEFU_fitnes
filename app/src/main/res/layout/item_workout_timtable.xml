@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/near_workout_holder_shadow"
+        android:layout_width="0dp"
+        android:layout_height="132dp"
+        android:background="@drawable/main_menu_near_workout_shadow"
+        app:layout_constraintEnd_toEndOf="@+id/near_workout_holder"
+        app:layout_constraintStart_toStartOf="@+id/near_workout_holder"
+        app:layout_constraintTop_toTopOf="@+id/near_workout_holder" />
+
+    <View
+        android:id="@+id/near_workout_holder"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:background="@drawable/main_menu_near_workout_holder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/near_workout_name"
+        style="@style/main_menu_near_workout_name"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/main_menu_near_workout_name"
+        app:layout_constraintStart_toStartOf="@+id/near_workout_holder"
+        app:layout_constraintTop_toTopOf="@+id/near_workout_holder" />
+
+    <TextView
+        android:id="@+id/near_workout_time"
+        style="@style/main_menu_near_workout_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/main_menu_near_workout_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/near_workout_holder_shadow" />
+
+    <TextView
+        android:id="@+id/near_workout_location"
+        style="@style/main_menu_workout_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="5dp"
+        android:gravity="bottom"
+        android:text="@string/main_menu_near_workout_location"
+        app:drawableLeftCompat="@drawable/main_menu_location_pic"
+        app:layout_constraintStart_toStartOf="@+id/near_workout_name"
+        app:layout_constraintTop_toBottomOf="@+id/near_workout_name" />
+
+    <TextView
+        android:id="@+id/near_workout_couch_name"
+        style="@style/main_menu_workout_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:drawablePadding="5dp"
+        android:gravity="bottom"
+        android:text="Кустов Юрий Сергеевич"
+        app:drawableLeftCompat="@drawable/main_menu_coach_name_pic"
+        app:layout_constraintBottom_toBottomOf="@+id/near_workout_holder_shadow"
+        app:layout_constraintStart_toStartOf="@+id/near_workout_location"
+        app:layout_constraintTop_toBottomOf="@+id/near_workout_location" />
+
+    <TextView
+        android:id="@+id/near_workout_space_count_title"
+        style="@style/main_menu_workout_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:drawablePadding="5dp"
+        android:gravity="bottom"
+        android:text="@string/main_menu_near_workout_count_space_title"
+        app:layout_constraintStart_toStartOf="@+id/near_workout_time"
+        app:layout_constraintTop_toBottomOf="@+id/near_workout_time" />
+
+    <TextView
+        android:id="@+id/near_workout_space_count"
+        style="@style/main_menu_workout_space_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="@string/main_menu_near_workout_space_count"
+        app:layout_constraintBottom_toBottomOf="@+id/near_workout_space_count_title"
+        app:layout_constraintStart_toEndOf="@+id/near_workout_space_count_title"
+        app:layout_constraintTop_toTopOf="@+id/near_workout_space_count_title" />
+
+    <TextView
+        android:id="@+id/near_workout_payment_status_paid"
+        style="@style/main_menu_workout_paid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="Записаться"
+        android:textColor="#ffff"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="6dp"
+        android:background="@drawable/timetable_workout_enter"
+        app:layout_constraintBottom_toBottomOf="@+id/near_workout_holder_shadow"
+        app:layout_constraintEnd_toEndOf="@+id/near_workout_space_count"
+        app:layout_constraintStart_toStartOf="@+id/near_workout_space_count_title"
+        app:layout_constraintTop_toBottomOf="@+id/near_workout_space_count_title" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
