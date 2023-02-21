@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/margin_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/margin_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <!--бар-->
+
+        <View
+            android:id="@+id/up_bar"
+            android:layout_width="0dp"
+            android:layout_height="235dp"
+            android:background="@drawable/main_menu_up_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/qr_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/main_menu_qr_holder"
+            android:contentDescription="@string/qr_code_content_description"
+            android:padding="10dp"
+            android:src="@drawable/main_menu_qr_source"
+            app:layout_constraintBottom_toBottomOf="@+id/up_bar"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/name_text"
+            style="@style/main_menu_up_bar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/main_menu_name_text"
+            app:layout_constraintEnd_toEndOf="@+id/up_bar"
+            app:layout_constraintStart_toEndOf="@+id/qr_holder"
+            app:layout_constraintTop_toTopOf="@+id/qr_holder" />
+
+        <TextView
+            android:id="@+id/card_number"
+            style="@style/main_menu_card_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/main_menu_card_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/qr_holder"
+            app:layout_constraintTop_toBottomOf="@+id/name_text" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/main_menu_workout_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_menu_workout_count_title"
+            app:layout_constraintBottom_toTopOf="@+id/workout_count"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/qr_holder" />
+
+
+        <TextView
+            android:id="@+id/workout_count"
+            style="@style/main_menu_workout_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/main_menu_workout_count"
+            app:layout_constraintBottom_toBottomOf="@+id/qr_holder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/qr_holder" />
+        <!--   bar end  -->
+
+
+        <!--   near workout start  -->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/up_bar"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/main_menu_titles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/main_menu_near_workout_title"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/main_recycler_view" />
+
+        <View
+            android:id="@+id/near_workout_holder_shadow"
+            android:layout_width="0dp"
+            android:layout_height="132dp"
+            android:background="@drawable/main_menu_near_workout_shadow"
+            app:layout_constraintEnd_toEndOf="@+id/near_workout_holder"
+            app:layout_constraintStart_toStartOf="@+id/near_workout_holder"
+            app:layout_constraintTop_toTopOf="@+id/near_workout_holder" />
+
+        <View
+            android:id="@+id/near_workout_holder"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/main_menu_near_workout_holder"
+            app:layout_constraintEnd_toEndOf="@+id/margin_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/near_workout_name"
+            style="@style/main_menu_near_workout_name"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/main_menu_near_workout_name"
+            app:layout_constraintStart_toStartOf="@+id/near_workout_holder"
+            app:layout_constraintTop_toTopOf="@+id/near_workout_holder" />
+
+        <TextView
+            android:id="@+id/near_workout_time"
+            style="@style/main_menu_near_workout_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/main_menu_near_workout_time"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintTop_toTopOf="@+id/near_workout_holder_shadow" />
+
+        <TextView
+            android:id="@+id/near_workout_location"
+            style="@style/main_menu_workout_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="5dp"
+            android:gravity="bottom"
+            android:text="@string/main_menu_near_workout_location"
+            app:drawableLeftCompat="@drawable/main_menu_location_pic"
+            app:layout_constraintStart_toStartOf="@+id/near_workout_name"
+            app:layout_constraintTop_toBottomOf="@+id/near_workout_name" />
+
+        <TextView
+            android:id="@+id/near_workout_couch_name"
+            style="@style/main_menu_workout_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:drawablePadding="5dp"
+            android:gravity="bottom"
+            android:text="@string/main_menu_near_workout_location"
+            app:drawableLeftCompat="@drawable/main_menu_coach_name_pic"
+            app:layout_constraintBottom_toBottomOf="@+id/near_workout_holder_shadow"
+            app:layout_constraintStart_toStartOf="@+id/near_workout_location"
+            app:layout_constraintTop_toBottomOf="@+id/near_workout_location" />
+
+        <TextView
+            android:id="@+id/near_workout_space_count_title"
+            style="@style/main_menu_workout_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:drawablePadding="5dp"
+            android:gravity="bottom"
+            android:text="@string/main_menu_near_workout_count_space_title"
+            app:layout_constraintStart_toStartOf="@+id/near_workout_time"
+            app:layout_constraintTop_toBottomOf="@+id/near_workout_time" />
+
+        <TextView
+            android:id="@+id/near_workout_space_count"
+            style="@style/main_menu_workout_space_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/main_menu_near_workout_space_count"
+            app:layout_constraintBottom_toBottomOf="@+id/near_workout_space_count_title"
+            app:layout_constraintStart_toEndOf="@+id/near_workout_space_count_title"
+            app:layout_constraintTop_toTopOf="@+id/near_workout_space_count_title" />
+
+        <TextView
+            android:id="@+id/near_workout_payment_status_paid"
+            style="@style/main_menu_workout_paid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/main_menu_near_workout_payment_status_paid"
+            app:layout_constraintBottom_toBottomOf="@+id/near_workout_holder_shadow"
+            app:layout_constraintStart_toStartOf="@+id/near_workout_space_count_title"
+            app:layout_constraintTop_toBottomOf="@+id/near_workout_space_count_title" />
+
+        <!--   near workout end  -->
+
+        <!--   Activity start  -->
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/main_menu_titles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/main_menu_activity_title"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/near_workout_holder_shadow" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/main_menu_activity_holder"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/main_menu_coming_soon"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coming_soon"
+            android:background="@drawable/blue_radius_style"
+            android:padding="5dp"
+            android:textColor="#ffff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+
+        <!--   Activity end  -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">FEFU_fitnes</string>
+    <string name="qr_code_content_description">QR_source</string>
+    <string name="main_menu_name_text">Райан, ваша карта</string>
+    <string name="main_menu_card_number">№583057349</string>
+    <string name="main_menu_workout_count_title">У вас осталось</string>
+    <string name="main_menu_workout_count">0 занятий</string>
+    <string name="main_menu_near_workout_title">Мои записи</string>
+    <string name="main_menu_near_workout_name">Групповое занятие по аэробике</string>
+    <string name="main_menu_near_workout_time">14:00 – 16:00</string>
+    <string name="main_menu_near_workout_location">Корпус S, зал аэробики</string>
+    <string name="main_menu_near_workout_count_space_title">Свободных мест</string>
+    <string name="main_menu_near_workout_space_count">3/25</string>
+    <string name="main_menu_near_workout_payment_status_paid">Оплачено</string>
+    <string name="main_menu_activity_title">Активность</string>
+    <string name="coming_soon">В разработке</string>
+</resources>

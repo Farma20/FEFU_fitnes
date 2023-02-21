@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //main_menu_text_styles
+
+    <style name="main_menu_up_bar_text">
+        <item name="android:textSize">
+            17sp
+        </item>
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+    </style>
+
+    <style name="main_menu_card_number">
+        <item name="android:textSize">
+            24sp
+        </item>
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+    </style>
+
+    <style name="main_menu_workout_count">
+        <item name="android:textSize">
+            20sp
+        </item>
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+    </style>
+
+    <style name="main_menu_titles">
+        <item name="android:textSize">
+            20sp
+        </item>
+        <item name="android:textColor">
+            #383838
+        </item>
+    </style>
+
+    <style name="main_menu_near_workout_name">
+        <item name="android:textSize">
+            15sp
+        </item>
+        <item name="android:textColor">
+            #383838
+        </item>
+        <item name="android:textStyle">
+            bold
+        </item>
+    </style>
+
+    <style name="main_menu_workout_info">
+        <item name="android:textSize">
+            10sp
+        </item>
+        <item name="android:textColor">
+            #383838
+        </item>
+    </style>
+
+    <style name="main_menu_workout_space_count">
+        <item name="android:textSize">
+            10sp
+        </item>
+        <item name="android:textColor">
+            #7062FF
+        </item>
+        <item name="android:textStyle">
+            bold
+        </item>
+    </style>
+
+    <style name="main_menu_workout_paid">
+        <item name="android:textSize">
+            11sp
+        </item>
+        <item name="android:textColor">
+            #383838
+        </item>
+    </style>
+
+
+</resources>
