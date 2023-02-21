@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/timetable_item_day_unchecked"
     android:layout_marginHorizontal="2dp"
     >
 
@@ -11,7 +12,6 @@
         app:layout_constraintDimensionRatio="h,1:1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/timetable_item_day_pick"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,17 @@
             android:textColor="#ffff"
             android:textStyle="bold"
             android:gravity="start"
-
             android:text="11" />
+
+        <TextView
+            android:id="@+id/day_crutch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#ffff"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:text="unchecked"
+            android:visibility="gone"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
