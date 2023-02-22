@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.profile.setOnClickListener {
+            onFragmentSelected(ProfileFragment.newInstance())
             it.setBackgroundResource(R.drawable.activity_main_bottom_navigate_profile_pick)
             binding.main.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main)
             binding.tables.setBackgroundResource(R.drawable.activity_main_bottom_navigate_tables)

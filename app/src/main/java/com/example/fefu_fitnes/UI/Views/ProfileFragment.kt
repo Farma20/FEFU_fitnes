@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.PaymentsRecyclerView
 import com.example.fefu_fitnes.databinding.FragmentPaymentsBinding
+import com.example.fefu_fitnes.databinding.FragmentProfileBinding
 
-class PaymentsFragment: Fragment() {
+class ProfileFragment: Fragment() {
 
     private lateinit var recyclerView: PaymentsRecyclerView
 
-    private var _binding: FragmentPaymentsBinding? = null
+    private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -21,10 +21,8 @@ class PaymentsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPaymentsBinding.inflate(inflater, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        recyclerView = PaymentsRecyclerView(inflater, binding.recyclerView)
-        recyclerView.onStart()
 
         return binding.root
     }
@@ -35,8 +33,8 @@ class PaymentsFragment: Fragment() {
     }
 
     companion object{
-        fun newInstance():PaymentsFragment{
-            return PaymentsFragment()
+        fun newInstance():ProfileFragment{
+            return ProfileFragment()
         }
     }
 
