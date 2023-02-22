@@ -15,4 +15,6 @@
     <string name="main_menu_activity_title">Активность</string>
     <string name="coming_soon">В разработке</string>
     <string name="timetable_search_hint">Поиск</string>
+    <string name="payments_item_subscription_study_label">Студентам и сотрудникам</string>
+    <string name="by_button">Купить</string>
 </resources>

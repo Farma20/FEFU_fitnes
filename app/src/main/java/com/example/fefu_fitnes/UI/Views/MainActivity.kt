@@ -33,12 +33,31 @@ class MainActivity : AppCompatActivity() {
             onFragmentSelected(MainMenuFragment.newInstance())
             it.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main_pick)
             binding.tables.setBackgroundResource(R.drawable.activity_main_bottom_navigate_tables)
+            binding.paid.setBackgroundResource(R.drawable.activity_main_bottom_navigate_paid)
+            binding.profile.setBackgroundResource(R.drawable.activity_main_bottom_navigate_profile)
         }
 
         binding.tables.setOnClickListener {
             onFragmentSelected(TimetableFragment.newInstance())
             it.setBackgroundResource(R.drawable.activity_main_bottom_navigate_tables_pick)
             binding.main.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main)
+            binding.paid.setBackgroundResource(R.drawable.activity_main_bottom_navigate_paid)
+            binding.profile.setBackgroundResource(R.drawable.activity_main_bottom_navigate_profile)
+        }
+
+        binding.paid.setOnClickListener {
+            onFragmentSelected(PaymentsFragment.newInstance())
+            it.setBackgroundResource(R.drawable.activity_main_bottom_navigate_paid_pick)
+            binding.main.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main)
+            binding.tables.setBackgroundResource(R.drawable.activity_main_bottom_navigate_tables)
+            binding.profile.setBackgroundResource(R.drawable.activity_main_bottom_navigate_profile)
+        }
+
+        binding.profile.setOnClickListener {
+            it.setBackgroundResource(R.drawable.activity_main_bottom_navigate_profile_pick)
+            binding.main.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main)
+            binding.tables.setBackgroundResource(R.drawable.activity_main_bottom_navigate_tables)
+            binding.paid.setBackgroundResource(R.drawable.activity_main_bottom_navigate_paid)
         }
 
 
