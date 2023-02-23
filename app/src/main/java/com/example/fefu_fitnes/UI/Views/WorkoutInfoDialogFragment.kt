@@ -8,9 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
+import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.WorkoutInfoDialogRecyclerView
 
 class WorkoutInfoDialogFragment:DialogFragment() {
+
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,6 +22,9 @@ class WorkoutInfoDialogFragment:DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.dialog_fragment_workout_info, container, false)
+
+        recyclerView = view.findViewById(R.id.recycler_view_photos)
+        WorkoutInfoDialogRecyclerView(inflater, recyclerView).onStart()
 
         return view
     }

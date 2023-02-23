@@ -48,13 +48,13 @@ class PaymentsRecyclerView(val inflater: LayoutInflater, var recyclerView: Recyc
 
 
 
-    private class PaymentsRecyclerViewHolder(view: View):ViewHolder(view){
+    private inner class PaymentsRecyclerViewHolder(view: View):ViewHolder(view){
         val subsLabel: TextView = itemView.findViewById(R.id.subscription_label)
         val subsInfo:TextView = itemView.findViewById(R.id.subscription_info)
         val subsPrice:TextView = itemView.findViewById(R.id.subscription_price)
     }
 
-    private class PaymentsRecyclerLabelViewHolder(view:View):ViewHolder(view){
+    private inner class PaymentsRecyclerLabelViewHolder(view:View):ViewHolder(view){
         val paymentLabel: TextView = itemView.findViewById(R.id.aboniment_label)
     }
 }

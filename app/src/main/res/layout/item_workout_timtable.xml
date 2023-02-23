@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
     <View
         android:id="@+id/near_workout_holder_shadow"
         android:layout_width="0dp"
@@ -117,6 +118,13 @@
         app:layout_constraintStart_toStartOf="@+id/near_workout_space_count_title"
         app:layout_constraintTop_toBottomOf="@+id/near_workout_space_count_title" />
 
-
+    <View
+        android:id="@+id/color_border"
+        android:layout_width="23dp"
+        android:layout_height="130dp"
+        android:background="@drawable/timetable_item_holder_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
