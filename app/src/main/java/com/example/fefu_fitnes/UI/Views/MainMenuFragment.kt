@@ -12,12 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.UI.Models.MainInfo
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.ViewModels.MainMenuViewModel
+import com.example.fefu_fitnes.databinding.FragmentMainMenuBinding
 
+const val WORKOUT_INFO = "workout_info"
 
 
 class MainMenuFragment: Fragment() {
 
     private lateinit var hostActivity: MainActivity
+
+    private var _binding: FragmentMainMenuBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
     private  var adapter: RecyclerAdapter? = null
@@ -31,21 +36,25 @@ class MainMenuFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        val view = inflater.inflate(R.layout.fragment_main_menu, container, false)
+        _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
 
-        recyclerView = view.findViewById(R.id.main_recycler_view) as RecyclerView
-
+        recyclerView = binding.mainRecyclerView
 
         updateUI()
 
-        return view
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
 
+        binding.nearWorkoutHolder.setOnClickListener{
+            WorkoutInfoDialogFragment.newInstance().show(
+                this@MainMenuFragment.requireFragmentManager(), WORKOUT_INFO
+            )
+        }
 
     }
 

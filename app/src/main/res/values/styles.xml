@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="MyDialog" parent="@android:style/Theme.Dialog">
+        <!--  other attributes  -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="backgroundColor">#000000</item>
+    </style>
+
     //main_menu_text_styles
 
     <style name="main_menu_up_bar_text">
