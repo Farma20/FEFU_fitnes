@@ -11,8 +11,6 @@ import com.example.fefu_fitnes.databinding.FragmentProfileBinding
 
 class ProfileFragment: Fragment() {
 
-    private lateinit var recyclerView: PaymentsRecyclerView
-
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
@@ -22,7 +20,6 @@ class ProfileFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
 
         return binding.root
     }

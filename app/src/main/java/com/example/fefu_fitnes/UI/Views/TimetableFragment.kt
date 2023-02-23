@@ -171,6 +171,12 @@ class TimetableFragment: Fragment() {
         ): WorkoutRecyclerViewHolder {
             val view = layoutInflater.inflate(R.layout.item_workout_timtable, parent, false)
 
+            view.setOnClickListener {
+                WorkoutInfoDialogFragment.newInstance().show(
+                    this@TimetableFragment.requireFragmentManager(), "const"
+                )
+            }
+
             return WorkoutRecyclerViewHolder(view)
         }
 

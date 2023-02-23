@@ -29,12 +29,11 @@ class WorkoutInfoDialogFragment:DialogFragment() {
         return view
     }
 
+    override fun getTheme() = R.style.MyDialog
 
     override fun onResume() {
         super.onResume()
-
-//        dialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
+        
 
         val params: ViewGroup.LayoutParams = dialog!!.window!!.attributes
         params.width = ViewGroup.LayoutParams.MATCH_PARENT

@@ -3,8 +3,7 @@
 
     <style name="MyDialog" parent="@android:style/Theme.Dialog">
         <!--  other attributes  -->
-        <item name="android:backgroundDimEnabled">false</item>
-        <item name="backgroundColor">#000000</item>
+        <item name="android:windowBackground">@drawable/dialog_fragment_background</item>
     </style>
 
     //main_menu_text_styles
