@@ -118,6 +118,20 @@
         app:layout_constraintStart_toStartOf="@+id/near_workout_space_count_title"
         app:layout_constraintTop_toBottomOf="@+id/near_workout_space_count_title" />
 
+    <TextView
+        android:id="@+id/near_workout_payment_status_paid_ok"
+        style="@style/main_menu_workout_paid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Вы записаны"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/near_workout_time"
+        app:layout_constraintStart_toStartOf="@+id/near_workout_time"
+        android:visibility="gone"/>
+
     <View
         android:id="@+id/color_border"
         android:layout_width="23dp"

@@ -1,7 +1,6 @@
 package com.example.fefu_fitnes.UI.Views
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fefu_fitnes.UI.Models.MainInfo
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Models.EventsDataModel
-import com.example.fefu_fitnes.UI.ViewModels.MainMenuViewModel
+import com.example.fefu_fitnes.UI.Models.UserDataModel
 import com.example.fefu_fitnes.databinding.FragmentMainMenuBinding
 
 const val WORKOUT_INFO = "workout_info"
@@ -31,11 +28,27 @@ class MainMenuFragment: Fragment() {
     private  var adapter: RecyclerAdapter? = null
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        val result = hostActivity.mainViewModel.getUserData()
+        result.observe(this.viewLifecycleOwner) { res ->
+
+            hostActivity.mainViewModel.user = UserDataModel(
+                firstName = res.firstName,
+                secondName = res.secondName,
+                cardNumber = res.cardNumber,
+                workoutCount = res.workoutCount
+            )
+            println(res)
+            updateUI()
+
+        }
 
         _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
 
@@ -75,8 +88,25 @@ class MainMenuFragment: Fragment() {
     }
 
     private fun updateUI(){
-        adapter = RecyclerAdapter(hostActivity.mainViewModel.events)
-        recyclerView.adapter = adapter
+        if(hostActivity.mainViewModel.nearWorkout.workoutName != ""){
+            adapter = RecyclerAdapter(hostActivity.mainViewModel.events)
+            recyclerView.adapter = adapter
+
+            binding.nearWorkoutHolderHide.visibility = View.GONE
+            binding.nearWorkoutTextHide.visibility = View.GONE
+            binding.nearWorkoutSpaceCountTitle.visibility = View.VISIBLE
+
+            binding.nameText.text = "${hostActivity.mainViewModel.user.firstName}, ваша карта"
+            binding.cardNumber.text = hostActivity.mainViewModel.user.cardNumber
+            binding.workoutCount.text = hostActivity.mainViewModel.user.cardNumber
+
+            binding.nearWorkoutName.text = hostActivity.mainViewModel.nearWorkout.workoutName
+            binding.nearWorkoutTime.text = hostActivity.mainViewModel.nearWorkout.workoutTime
+            binding.nearWorkoutLocation.text =hostActivity.mainViewModel.nearWorkout.workoutLocation
+            binding.nearWorkoutCouchName.text = hostActivity.mainViewModel.nearWorkout.couchName
+            binding.nearWorkoutSpaceCount.text = hostActivity.mainViewModel.nearWorkout.freeSpaces
+            binding.nearWorkoutPaymentStatusPaid.text = hostActivity.mainViewModel.nearWorkout.paymentStatus
+        }
     }
 
     private inner class RecyclerAdapter(var events:List<EventsDataModel>):

@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -139,6 +140,7 @@
             app:layout_constraintStart_toStartOf="@+id/margin_left"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+
         <TextView
             android:id="@+id/near_workout_name"
             style="@style/main_menu_near_workout_name"
@@ -198,8 +200,10 @@
             android:drawablePadding="5dp"
             android:gravity="bottom"
             android:text="@string/main_menu_near_workout_count_space_title"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@+id/near_workout_time"
-            app:layout_constraintTop_toBottomOf="@+id/near_workout_time" />
+            app:layout_constraintTop_toBottomOf="@+id/near_workout_time"
+            />
 
         <TextView
             android:id="@+id/near_workout_space_count"
@@ -224,9 +228,31 @@
             app:layout_constraintStart_toStartOf="@+id/near_workout_space_count_title"
             app:layout_constraintTop_toBottomOf="@+id/near_workout_space_count_title" />
 
+        <View
+            android:id="@+id/near_workout_holder_hide"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/main_menu_near_workout_holder"
+            app:layout_constraintEnd_toEndOf="@+id/margin_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
         <!--   near workout end  -->
 
         <!--   Activity start  -->
+
+        <TextView
+            android:id="@+id/near_workout_text_hide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Вы еще никуда не записаны"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/near_workout_holder_shadow"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/near_workout_holder_shadow"
+            app:layout_constraintTop_toTopOf="@+id/near_workout_holder_shadow" />
 
         <TextView
             android:id="@+id/textView3"
@@ -248,28 +274,28 @@
             app:layout_constraintStart_toStartOf="@+id/margin_left"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/main_menu_coming_soon"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toStartOf="@+id/margin_right"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+<!--        <View-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:background="@drawable/main_menu_coming_soon"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/imageView"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/margin_right"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/imageView"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/imageView" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/coming_soon"
-            android:background="@drawable/blue_radius_style"
-            android:padding="5dp"
-            android:textColor="#ffff"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toStartOf="@+id/margin_right"
-            app:layout_constraintStart_toStartOf="@+id/margin_left"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/coming_soon"-->
+<!--            android:background="@drawable/blue_radius_style"-->
+<!--            android:padding="5dp"-->
+<!--            android:textColor="#ffff"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/imageView"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/margin_right"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/margin_left"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/imageView" />-->
 
 
         <!--   Activity end  -->

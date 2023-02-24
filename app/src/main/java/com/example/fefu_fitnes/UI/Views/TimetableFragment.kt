@@ -2,6 +2,7 @@ package com.example.fefu_fitnes.UI.Views
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,20 +14,22 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
+import com.example.fefu_fitnes.UI.Models.UserDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.databinding.FragmentTimetableBinding
 import java.util.Collections.shuffle
 
 
-class TimetableFragment: Fragment() {
+class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     private var _binding: FragmentTimetableBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var hostActivity: MainActivity
+    lateinit var hostActivity: MainActivity
 
     private lateinit var recyclerView:RecyclerView
     private var adapter: RecyclerViewAdapter? = null
     private var allRecyclerItems = mutableListOf<View>()
+    private var allWorkoutItems = mutableListOf<View>()
 
     private lateinit var workoutRecyclerView:RecyclerView
     private var workoutAdapter: WorkoutRecyclerViewAdapter? = null
@@ -62,6 +65,12 @@ class TimetableFragment: Fragment() {
         listOf("вс", "28"),
     )
 
+    override fun onWorkoutSelected( i: Int ) {
+        hostActivity.mainViewModel.allWorkout[i-1].paymentStatus = "Вы записаны"
+        hostActivity.mainViewModel.nearWorkout = hostActivity.mainViewModel.allWorkout[i-1]
+        updateWorkoutUI()
+    }
+
     private lateinit var workoutRecyclerViewConstant: List<WorkoutDataModel>
 
     override fun onCreateView(
@@ -70,6 +79,14 @@ class TimetableFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
+
+        val result = hostActivity.mainViewModel.getWorkout()
+        result.observe(this.viewLifecycleOwner) { res ->
+
+            hostActivity.mainViewModel.allWorkout = res.asList()
+            updateUI()
+            updateWorkoutUI()
+        }
 
         //отключение прокрутки recylerView
         val myLinearLayoutManager = object :
@@ -115,6 +132,7 @@ class TimetableFragment: Fragment() {
         }
     }
 
+
     //date recyclerView
     private inner class RecyclerViewAdapter(val data:List<List<String>>):
         RecyclerView.Adapter<RecyclerViewHolder>(){
@@ -127,11 +145,11 @@ class TimetableFragment: Fragment() {
                     if (item != it)
                         item.setBackgroundResource(R.drawable.timetable_item_day_unchecked)
                 }
+
                 it.setBackgroundResource(R.drawable.timetable_item_day_checked)
-
                 updateWorkoutUI()
-
             }
+
             return RecyclerViewHolder(view)
         }
 
@@ -171,11 +189,11 @@ class TimetableFragment: Fragment() {
             viewType: Int
         ): WorkoutRecyclerViewHolder {
             val view = layoutInflater.inflate(R.layout.item_workout_timtable, parent, false)
-
+            allWorkoutItems.add(view)
             view.setOnClickListener {
-                WorkoutInfoDialogFragment.newInstance(hostActivity.mainViewModel.allWorkout[viewType]).show(
-                    this@TimetableFragment.requireFragmentManager(), "const"
-                )
+                val dialogFragment =  WorkoutInfoAllDialogFragment.newInstance(hostActivity.mainViewModel.allWorkout[viewType])
+                dialogFragment.setTargetFragment(this@TimetableFragment, 1)
+                dialogFragment.show(this@TimetableFragment.requireFragmentManager(), "const")
             }
 
             return WorkoutRecyclerViewHolder(view)
@@ -200,6 +218,11 @@ class TimetableFragment: Fragment() {
             holder.location.text = item.workoutLocation
             holder.time.text = item.workoutTime
             holder.spaceCount.text = item.freeSpaces
+
+            if(item.paymentStatus == "Вы записаны"){
+                holder.status.visibility = View.GONE
+                holder.statusOk.visibility = View.VISIBLE
+            }
         }
 
         override fun getItemCount(): Int {
@@ -210,21 +233,24 @@ class TimetableFragment: Fragment() {
 
     private inner class WorkoutRecyclerViewHolder(view: View):RecyclerView.ViewHolder(view){
         var parent: View = itemView.findViewById(R.id.parent)
-        val workoutName:TextView = itemView.findViewById(R.id.near_workout_name)
-        val trainerName:TextView = itemView.findViewById(R.id.near_workout_couch_name)
-        val location:TextView = itemView.findViewById(R.id.near_workout_location)
-        val time:TextView = itemView.findViewById(R.id.near_workout_time)
-        val spaceCount:TextView = itemView.findViewById(R.id.near_workout_space_count)
+        var status: TextView = itemView.findViewById(R.id.near_workout_payment_status_paid)
+        var statusOk: TextView = itemView.findViewById(R.id.near_workout_payment_status_paid_ok)
+        var  workoutName:TextView = itemView.findViewById(R.id.near_workout_name)
+        var  trainerName:TextView = itemView.findViewById(R.id.near_workout_couch_name)
+        var  location:TextView = itemView.findViewById(R.id.near_workout_location)
+        var  time:TextView = itemView.findViewById(R.id.near_workout_time)
+        var  spaceCount:TextView = itemView.findViewById(R.id.near_workout_space_count)
     }
     //workout recyclerView
 
     private fun updateUI(){
+        workoutRecyclerViewConstant = hostActivity.mainViewModel.allWorkout
         adapter = RecyclerViewAdapter(recyclerViewConstants)
         recyclerView.adapter = adapter
     }
 
     private fun updateWorkoutUI(){
-        workoutAdapter = WorkoutRecyclerViewAdapter(workoutRecyclerViewConstant.shuffled())
+        workoutAdapter = WorkoutRecyclerViewAdapter(workoutRecyclerViewConstant)
         workoutRecyclerView.adapter = workoutAdapter
     }
 
