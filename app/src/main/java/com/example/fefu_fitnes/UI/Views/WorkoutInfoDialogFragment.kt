@@ -11,22 +11,41 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.WorkoutInfoDialogRecyclerView
+import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
+import com.example.fefu_fitnes.databinding.DialogFragmentWorkoutInfoBinding
+import com.example.fefu_fitnes.databinding.FragmentMainMenuBinding
 
-class WorkoutInfoDialogFragment:DialogFragment() {
+class WorkoutInfoDialogFragment(val dialogWorkoutData:WorkoutDataModel):DialogFragment() {
 
     lateinit var recyclerView: RecyclerView
+
+    private var _binding: DialogFragmentWorkoutInfoBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.dialog_fragment_workout_info, container, false)
+    ): View {
+        _binding = DialogFragmentWorkoutInfoBinding.inflate(inflater, container, false)
 
-        recyclerView = view.findViewById(R.id.recycler_view_photos)
-        WorkoutInfoDialogRecyclerView(inflater, recyclerView).onStart()
+        recyclerView = binding.recyclerViewPhotos
+        WorkoutInfoDialogRecyclerView(inflater, recyclerView).onStart(dialogWorkoutData.workoutPhotos)
 
-        return view
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.nearWorkoutName.text = dialogWorkoutData.workoutName
+        binding.nearWorkoutSpaceCount.text = dialogWorkoutData.freeSpaces
+        binding.nearWorkoutTime.text = dialogWorkoutData.workoutTime
+        binding.nearWorkoutPaymentStatusPaid.text = dialogWorkoutData.paymentStatus
+        binding.nearWorkoutCouchName.text = dialogWorkoutData.couchName
+        binding.couchNumber.text = dialogWorkoutData.couchPhone
+        binding.couchMail.text = dialogWorkoutData.couchEmail
+        binding.nearWorkoutLocation.text = dialogWorkoutData.workoutLocation
+        binding.workoutDescription.text = dialogWorkoutData.workoutDescription
     }
 
     override fun getTheme() = R.style.MyDialog
@@ -43,8 +62,9 @@ class WorkoutInfoDialogFragment:DialogFragment() {
 
 
     companion object{
-        fun newInstance():WorkoutInfoDialogFragment{
-            return WorkoutInfoDialogFragment()
+        fun newInstance(workoutData: WorkoutDataModel):WorkoutInfoDialogFragment{
+
+            return WorkoutInfoDialogFragment(workoutData)
         }
     }
     

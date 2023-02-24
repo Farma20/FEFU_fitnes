@@ -7,17 +7,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.fefu_fitnes.R
+import com.example.fefu_fitnes.UI.Models.ServicesModel
 
 
 class PaymentsRecyclerView(val inflater: LayoutInflater, var recyclerView: RecyclerView) {
 
 
-    fun onStart(){
-        recyclerView.adapter = PaymentsRecyclerViewAdapter()
+    fun onStart(data: List<ServicesModel>){
+        recyclerView.adapter = PaymentsRecyclerViewAdapter(data)
     }
 
 
-    private inner class PaymentsRecyclerViewAdapter():
+    private inner class PaymentsRecyclerViewAdapter(val data: List<ServicesModel>):
         RecyclerView.Adapter<ViewHolder>(){
         override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -38,11 +39,15 @@ class PaymentsRecyclerView(val inflater: LayoutInflater, var recyclerView: Recyc
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            return Unit
+            if(holder is PaymentsRecyclerViewHolder){
+                holder.subsLabel.text = data[position].destiny
+                holder.subsInfo.text = data[position].visitsCount
+                holder.subsPrice.text = data[position].price
+            }
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return data.count()
         }
     }
 

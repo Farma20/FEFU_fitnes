@@ -1,17 +1,19 @@
 package com.example.fefu_fitnes.UI.Views
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.PaymentsRecyclerView
 import com.example.fefu_fitnes.databinding.FragmentPaymentsBinding
 
-class PaymentsFragment: Fragment() {
+class ServicesFragment: Fragment() {
 
     private lateinit var recyclerView: PaymentsRecyclerView
+
+    private lateinit var hostActivity: MainActivity
 
     private var _binding: FragmentPaymentsBinding? = null
     private val binding get() = _binding!!
@@ -24,9 +26,14 @@ class PaymentsFragment: Fragment() {
         _binding = FragmentPaymentsBinding.inflate(inflater, container, false)
 
         recyclerView = PaymentsRecyclerView(inflater, binding.recyclerView)
-        recyclerView.onStart()
+        recyclerView.onStart(hostActivity.mainViewModel.allServices)
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        hostActivity = context as MainActivity
     }
 
     override fun onDestroyView() {
@@ -35,8 +42,8 @@ class PaymentsFragment: Fragment() {
     }
 
     companion object{
-        fun newInstance():PaymentsFragment{
-            return PaymentsFragment()
+        fun newInstance():ServicesFragment{
+            return ServicesFragment()
         }
     }
 

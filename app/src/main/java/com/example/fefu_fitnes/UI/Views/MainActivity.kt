@@ -4,14 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.example.fefu_fitnes.R
+import com.example.fefu_fitnes.UI.ViewModels.MainViewModel
 import com.example.fefu_fitnes.databinding.ActivityMainBinding
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    val mainViewModel:MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.paid.setOnClickListener {
-            onFragmentSelected(PaymentsFragment.newInstance())
+            onFragmentSelected(ServicesFragment.newInstance())
             it.setBackgroundResource(R.drawable.activity_main_bottom_navigate_paid_pick)
             binding.main.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main)
             binding.tables.setBackgroundResource(R.drawable.activity_main_bottom_navigate_tables)

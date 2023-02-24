@@ -10,19 +10,12 @@ import com.example.fefu_fitnes.R
 
 class WorkoutInfoDialogRecyclerView(val inflater: LayoutInflater, private val recyclerView: RecyclerView) {
 
-    private val photos:List<Int> = listOf(
-        R.drawable.workout_photo_1,
-        R.drawable.workout_photo_2,
-        R.drawable.workout_photo_3,
-        R.drawable.workout_photo_4,
-        R.drawable.workout_photo_5,
-    )
 
-    fun onStart() {
+    fun onStart(photos:List<Int>) {
         recyclerView.adapter = WorkoutDialogAdapter(photos.shuffled())
     }
 
-    private inner class WorkoutDialogAdapter(photos: List<Int>):
+    private inner class WorkoutDialogAdapter(val photos: List<Int>):
         RecyclerView.Adapter<ViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = inflater.inflate(R.layout.item_workout_info_photo, parent, false)
