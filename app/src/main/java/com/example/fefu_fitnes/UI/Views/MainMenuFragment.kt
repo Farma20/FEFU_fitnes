@@ -71,7 +71,7 @@ class MainMenuFragment: Fragment() {
 
         binding.nameText.text = "${hostActivity.mainViewModel.user.firstName}, ваша карта"
         binding.cardNumber.text = hostActivity.mainViewModel.user.cardNumber
-        binding.workoutCount.text = hostActivity.mainViewModel.user.cardNumber
+        binding.workoutCount.text = hostActivity.mainViewModel.user.workoutCount
 
         binding.nearWorkoutName.text = hostActivity.mainViewModel.nearWorkout.workoutName
         binding.nearWorkoutTime.text = hostActivity.mainViewModel.nearWorkout.workoutTime
@@ -98,7 +98,9 @@ class MainMenuFragment: Fragment() {
 
             binding.nameText.text = "${hostActivity.mainViewModel.user.firstName}, ваша карта"
             binding.cardNumber.text = hostActivity.mainViewModel.user.cardNumber
-            binding.workoutCount.text = hostActivity.mainViewModel.user.cardNumber
+            binding.workoutCount.text = hostActivity.mainViewModel.user.workoutCount
+
+            println(hostActivity.mainViewModel.user.workoutCount)
 
             binding.nearWorkoutName.text = hostActivity.mainViewModel.nearWorkout.workoutName
             binding.nearWorkoutTime.text = hostActivity.mainViewModel.nearWorkout.workoutTime
