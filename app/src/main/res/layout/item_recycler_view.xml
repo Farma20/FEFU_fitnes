@@ -9,7 +9,7 @@
     android:background="@drawable/blue_radius_style">
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/event_text"
         android:layout_width="90dp"
         android:layout_height="84dp"
         android:text="Пример"

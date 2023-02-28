@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.PaymentsRecyclerView
+import com.example.fefu_fitnes.UI.ViewModels.ServicesViewModel
 import com.example.fefu_fitnes.databinding.FragmentPaymentsBinding
 
 class ServicesFragment: Fragment() {
@@ -18,6 +20,10 @@ class ServicesFragment: Fragment() {
     private var _binding: FragmentPaymentsBinding? = null
     private val binding get() = _binding!!
 
+    private val servicesViewModel: ServicesViewModel by lazy {
+        ViewModelProvider(this)[ServicesViewModel::class.java]
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,7 +32,7 @@ class ServicesFragment: Fragment() {
         _binding = FragmentPaymentsBinding.inflate(inflater, container, false)
 
         recyclerView = PaymentsRecyclerView(inflater, binding.recyclerView)
-        recyclerView.onStart(hostActivity.mainViewModel.allServices)
+        recyclerView.onStart(servicesViewModel.allServices)
 
         return binding.root
     }

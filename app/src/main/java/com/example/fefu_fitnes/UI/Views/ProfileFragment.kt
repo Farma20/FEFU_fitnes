@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.PaymentsRecyclerView
 import com.example.fefu_fitnes.UI.Models.UserDataModel
+import com.example.fefu_fitnes.UI.ViewModels.ProfileViewModel
 import com.example.fefu_fitnes.databinding.FragmentPaymentsBinding
 import com.example.fefu_fitnes.databinding.FragmentProfileBinding
 
@@ -18,6 +20,10 @@ class ProfileFragment: Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val profileViewModel: ProfileViewModel by lazy{
+        ViewModelProvider(this)[ProfileViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +39,7 @@ class ProfileFragment: Fragment() {
     override fun onStart() {
         super.onStart()
 
-        binding.name.text = "${hostActivity.mainViewModel.user.firstName} ${hostActivity.mainViewModel.user.secondName}"
+        binding.name.text = "${profileViewModel.currentUser.firstName} ${profileViewModel.currentUser.secondName}"
     }
 
     override fun onAttach(context: Context) {

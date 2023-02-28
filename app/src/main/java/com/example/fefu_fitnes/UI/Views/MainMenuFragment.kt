@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fefu_fitnes.R
-import com.example.fefu_fitnes.UI.Models.EventsDataModel
-import com.example.fefu_fitnes.UI.Models.UserDataModel
+import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.MainMenuRecyclerView
+import com.example.fefu_fitnes.UI.ViewModels.MainMenuViewModel
 import com.example.fefu_fitnes.databinding.FragmentMainMenuBinding
 
 const val WORKOUT_INFO = "workout_info"
@@ -25,10 +24,11 @@ class MainMenuFragment: Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
-    private  var adapter: RecyclerAdapter? = null
+    private lateinit var recyclerClass: MainMenuRecyclerView
 
-
-
+    val mainMenuViewModel: MainMenuViewModel by lazy {
+        ViewModelProvider(this)[MainMenuViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,23 +36,26 @@ class MainMenuFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val result = hostActivity.mainViewModel.getUserData()
-        result.observe(this.viewLifecycleOwner) { res ->
-
-            hostActivity.mainViewModel.user = UserDataModel(
-                firstName = res.firstName,
-                secondName = res.secondName,
-                cardNumber = res.cardNumber,
-                workoutCount = res.workoutCount
-            )
-            println(res)
-            updateUI()
-
-        }
+//        val result = hostActivity.mainViewModel.getUserData()
+//        result.observe(this.viewLifecycleOwner) { res ->
+//
+//            hostActivity.mainViewModel.user = UserDataModel(
+//                firstName = res.firstName,
+//                secondName = res.secondName,
+//                cardNumber = res.cardNumber,
+//                workoutCount = res.workoutCount
+//            )
+//            println(res)
+//            updateUI()
+//
+//        }
 
         _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
 
         recyclerView = binding.mainRecyclerView
+
+        recyclerClass = MainMenuRecyclerView(inflater, recyclerView)
+        recyclerClass.onStart(mainMenuViewModel.currentEvents)
 
         updateUI()
 
@@ -63,23 +66,14 @@ class MainMenuFragment: Fragment() {
     override fun onStart() {
         super.onStart()
 
-        binding.nearWorkoutHolder.setOnClickListener{
-            WorkoutInfoDialogFragment.newInstance(hostActivity.mainViewModel.nearWorkout).show(
-                this@MainMenuFragment.requireFragmentManager(), WORKOUT_INFO
-            )
+        if(mainMenuViewModel.currentWorkout.workoutName != ""){
+
+            binding.nearWorkoutHolder.setOnClickListener{
+                WorkoutInfoDialogFragment.newInstance(mainMenuViewModel.currentWorkout).show(
+                    this@MainMenuFragment.requireFragmentManager(), WORKOUT_INFO
+                )
+            }
         }
-
-        binding.nameText.text = "${hostActivity.mainViewModel.user.firstName}, ваша карта"
-        binding.cardNumber.text = hostActivity.mainViewModel.user.cardNumber
-        binding.workoutCount.text = hostActivity.mainViewModel.user.workoutCount
-
-        binding.nearWorkoutName.text = hostActivity.mainViewModel.nearWorkout.workoutName
-        binding.nearWorkoutTime.text = hostActivity.mainViewModel.nearWorkout.workoutTime
-        binding.nearWorkoutLocation.text =hostActivity.mainViewModel.nearWorkout.workoutLocation
-        binding.nearWorkoutCouchName.text = hostActivity.mainViewModel.nearWorkout.couchName
-        binding.nearWorkoutSpaceCount.text = hostActivity.mainViewModel.nearWorkout.freeSpaces
-        binding.nearWorkoutPaymentStatusPaid.text = hostActivity.mainViewModel.nearWorkout.freeSpaces
-
     }
 
     override fun onAttach(context: Context) {
@@ -87,53 +81,27 @@ class MainMenuFragment: Fragment() {
         hostActivity = context as MainActivity
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUI(){
-        if(hostActivity.mainViewModel.nearWorkout.workoutName != ""){
-            adapter = RecyclerAdapter(hostActivity.mainViewModel.events)
-            recyclerView.adapter = adapter
+        recyclerClass.onStart(mainMenuViewModel.currentEvents)
+
+        binding.nameText.text = "${mainMenuViewModel.currentUser.firstName}, ваша карта"
+        binding.cardNumber.text = mainMenuViewModel.currentUser.cardNumber
+        binding.workoutCount.text = mainMenuViewModel.currentUser.workoutCount
+
+        if(mainMenuViewModel.currentWorkout.workoutName != ""){
 
             binding.nearWorkoutHolderHide.visibility = View.GONE
             binding.nearWorkoutTextHide.visibility = View.GONE
             binding.nearWorkoutSpaceCountTitle.visibility = View.VISIBLE
 
-            binding.nameText.text = "${hostActivity.mainViewModel.user.firstName}, ваша карта"
-            binding.cardNumber.text = hostActivity.mainViewModel.user.cardNumber
-            binding.workoutCount.text = hostActivity.mainViewModel.user.workoutCount
-
-            println(hostActivity.mainViewModel.user.workoutCount)
-
-            binding.nearWorkoutName.text = hostActivity.mainViewModel.nearWorkout.workoutName
-            binding.nearWorkoutTime.text = hostActivity.mainViewModel.nearWorkout.workoutTime
-            binding.nearWorkoutLocation.text =hostActivity.mainViewModel.nearWorkout.workoutLocation
-            binding.nearWorkoutCouchName.text = hostActivity.mainViewModel.nearWorkout.couchName
-            binding.nearWorkoutSpaceCount.text = hostActivity.mainViewModel.nearWorkout.freeSpaces
-            binding.nearWorkoutPaymentStatusPaid.text = hostActivity.mainViewModel.nearWorkout.paymentStatus
+            binding.nearWorkoutName.text = mainMenuViewModel.currentWorkout.workoutName
+            binding.nearWorkoutTime.text = mainMenuViewModel.currentWorkout.workoutTime
+            binding.nearWorkoutLocation.text = mainMenuViewModel.currentWorkout.workoutLocation
+            binding.nearWorkoutCouchName.text = mainMenuViewModel.currentWorkout.couchName
+            binding.nearWorkoutSpaceCount.text = mainMenuViewModel.currentWorkout.freeSpaces
+            binding.nearWorkoutPaymentStatusPaid.text = mainMenuViewModel.currentWorkout.paymentStatus
         }
-    }
-
-    private inner class RecyclerAdapter(var events:List<EventsDataModel>):
-        RecyclerView.Adapter<RecyclerViewHolder>(){
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-            val view = layoutInflater.inflate(R.layout.item_recycler_view, parent, false)
-            return RecyclerViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-            val event = events[position]
-            holder.apply {
-                text1.text = event.textEvent
-            }
-        }
-
-        override fun getItemCount(): Int = events.count()
-
-    }
-
-    private inner class RecyclerViewHolder(view: View): RecyclerView.ViewHolder(view){
-
-        val text1: TextView = itemView.findViewById(R.id.text1)
-
     }
 
 
