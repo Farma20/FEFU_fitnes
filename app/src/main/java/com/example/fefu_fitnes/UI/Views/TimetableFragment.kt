@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableDateRecyclerView
@@ -28,8 +29,11 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     }
 
     override fun onWorkoutSelected( i: Int ) {
-        hostActivity.mainViewModel.allWorkout[i].paymentStatus = "Вы записаны"
-        hostActivity.mainViewModel.nearWorkout = hostActivity.mainViewModel.allWorkout[i-1]
+        val currentWorkout:WorkoutDataModel? = timetableViewModel.getWorkouts().value?.get(i)
+        currentWorkout?.paymentStatus = "Вы записанны"
+        if (currentWorkout != null) {
+            timetableViewModel.setMainWorkout(currentWorkout)
+        }
     }
 
     override fun onCreateView(

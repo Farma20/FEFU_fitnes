@@ -24,52 +24,6 @@ import java.io.IOException
 
 class MainViewModel:ViewModel(){
 
-    private val gson = Gson()
-    fun getUserData():LiveData<UserDataModel>{
-
-        val result = MutableLiveData<UserDataModel>()
-        viewModelScope.launch {
-            val listResult = FitnessApi.retrofitService.getPhotos()
-            result.postValue(gson.fromJson(listResult, UserDataModel::class.java))
-        }
-        return result
-    }
-
-    fun getWorkout():LiveData<Array<WorkoutDataModel>>{
-
-        val result = MutableLiveData<Array<WorkoutDataModel>>()
-        viewModelScope.launch {
-            val listResult = FitnessApi.retrofitService.getWorkout()
-            result.postValue(gson.fromJson(listResult, Array<WorkoutDataModel>::class.java))
-        }
-        return result
-    }
-
-    fun postMessage( id: Int){
-
-            val JSON = "application/json; charset=utf-8".toMediaType()
-
-            val data = mapOf<String, Int>("event_id" to id)
-
-            val client = OkHttpClient()
-            val body: RequestBody = JSONObject(data).toString().toRequestBody(JSON)
-            val request = Request.Builder().url("http://172.20.10.2/api/booking/addNewBooking").post(body).build()
-
-            try {
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) {
-                        throw IOException("Запрос к серверу не был успешен:" +
-                                " ${response.code} ${response.message}")
-                    }
-                    println(response.body!!.string())
-                }
-            } catch (e: IOException) {
-                println("Ошибка подключения: $e")
-            }
-    }
-
-
-
     var user = UserDataModel(
         "Райан", "Гослинг", "№583057349", "0 занятий"
     )

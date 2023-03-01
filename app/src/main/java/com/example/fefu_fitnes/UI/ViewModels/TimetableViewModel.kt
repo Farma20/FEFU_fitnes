@@ -17,9 +17,15 @@ class TimetableViewModel:ViewModel() {
         return allWorkout
     }
 
+    //Передача выбранной тренировки
+    fun setMainWorkout(workout:WorkoutDataModel){
+        mainRepository.setWorkout(workout)
+    }
+
     override fun onCleared() {
         super.onCleared()
     }
+
 
     init {
         mainRepository.getWorkouts().observeForever{

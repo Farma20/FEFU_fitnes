@@ -59,17 +59,18 @@ class WorkoutInfoAllDialogFragment(val dialogWorkoutData:WorkoutDataModel):Dialo
 
     override fun onStart() {
         super.onStart()
-        binding.nearWorkoutName.text = dialogWorkoutData.workoutName
-        binding.nearWorkoutSpaceCount.text = dialogWorkoutData.freeSpaces
-        binding.nearWorkoutTime.text = dialogWorkoutData.workoutTime
-        binding.nearWorkoutCouchName.text = dialogWorkoutData.couchName
-        binding.couchNumber.text = dialogWorkoutData.couchPhone
-        binding.couchMail.text = dialogWorkoutData.couchEmail
-        binding.nearWorkoutLocation.text = dialogWorkoutData.workoutLocation
-        binding.workoutDescription.text = dialogWorkoutData.workoutDescription
+        binding.apply {
+            nearWorkoutName.text = dialogWorkoutData.workoutName
+            nearWorkoutSpaceCount.text = dialogWorkoutData.freeSpaces
+            nearWorkoutTime.text = dialogWorkoutData.workoutTime
+            nearWorkoutCouchName.text = dialogWorkoutData.couchName
+            couchNumber.text = dialogWorkoutData.couchPhone
+            couchMail.text = dialogWorkoutData.couchEmail
+            nearWorkoutLocation.text = dialogWorkoutData.workoutLocation
+            workoutDescription.text = dialogWorkoutData.workoutDescription
+        }
 
         binding.nearWorkoutPaymentStatusPaid3.setOnClickListener{
-//            hostActivity.mainViewModel.sendNewBooking(1,1)
 
             binding.nearWorkoutPaymentStatusPaid3.visibility = View.GONE
             binding.nearWorkoutPaymentStatusPaid.visibility = View.VISIBLE
@@ -78,9 +79,9 @@ class WorkoutInfoAllDialogFragment(val dialogWorkoutData:WorkoutDataModel):Dialo
                 (fragment as Callback).onWorkoutSelected(dialogWorkoutData.workoutId)
             }
 
-            Thread {
-                hostActivity.mainViewModel.postMessage(dialogWorkoutData.workoutId)
-            }.start()
+//            Thread {
+//                hostActivity.mainViewModel.postMessage(dialogWorkoutData.workoutId)
+//            }.start()
         }
     }
 
