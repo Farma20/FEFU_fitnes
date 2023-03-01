@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Models.UserDataModel
 import com.example.fefu_fitnes.UI.ViewModels.MainViewModel
+import com.example.fefu_fitnes.data.Repository.MainRepository
 import com.example.fefu_fitnes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
 
-
+    //костыльно создаю главный репозиторий (перерделать в дальнейшем)
+    private val mainRepository = MainRepository.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

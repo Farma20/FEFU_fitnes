@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fefu_fitnes.UI.Models.UserDataModel
+import com.example.fefu_fitnes.data.Repository.MainRepository
 
 class ProfileViewModel:ViewModel() {
+
+    private val mainRepository = MainRepository.getInstance()
 
     private val currentUser = MutableLiveData<UserDataModel>()
 
@@ -14,9 +17,13 @@ class ProfileViewModel:ViewModel() {
         return currentUser
     }
 
+    override fun onCleared() {
+        super.onCleared()
+    }
+
     init {
-        currentUser.value = UserDataModel(
-            "Райан", "Гослинг", "№583057349", "0 занятий"
-        )
+        mainRepository.getUser().observeForever{
+            currentUser.value = it
+        }
     }
 }
