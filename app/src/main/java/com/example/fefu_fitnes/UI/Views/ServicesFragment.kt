@@ -13,12 +13,11 @@ import com.example.fefu_fitnes.databinding.FragmentPaymentsBinding
 
 class ServicesFragment: Fragment() {
 
-    private lateinit var recyclerView: PaymentsRecyclerView
-
-    private lateinit var hostActivity: MainActivity
-
     private var _binding: FragmentPaymentsBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var hostActivity: MainActivity
+    private lateinit var recyclerViewClass: PaymentsRecyclerView
 
     private val servicesViewModel: ServicesViewModel by lazy {
         ViewModelProvider(this)[ServicesViewModel::class.java]
@@ -31,10 +30,17 @@ class ServicesFragment: Fragment() {
     ): View {
         _binding = FragmentPaymentsBinding.inflate(inflater, container, false)
 
-        recyclerView = PaymentsRecyclerView(inflater, binding.recyclerView)
-        recyclerView.onStart(servicesViewModel.allServices)
+        recyclerViewClass = PaymentsRecyclerView(inflater, binding.recyclerView)
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        servicesViewModel.getServices().observe(this){
+            recyclerViewClass.onStart(it)
+        }
     }
 
     override fun onAttach(context: Context) {

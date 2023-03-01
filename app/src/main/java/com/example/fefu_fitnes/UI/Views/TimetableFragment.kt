@@ -16,17 +16,12 @@ import com.example.fefu_fitnes.databinding.FragmentTimetableBinding
 
 
 class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
+
     private var _binding: FragmentTimetableBinding? = null
     private val binding get() = _binding!!
-
-    lateinit var hostActivity: MainActivity
-
-    private lateinit var recyclerView:RecyclerView
-
+    private lateinit var hostActivity: MainActivity
     private lateinit var recyclerViewClass: TimetableDateRecyclerView
     private lateinit var recyclerViewListClass: TimetableListRecyclerView
-
-    private lateinit var workoutRecyclerViewConstant: List<WorkoutDataModel>
 
     private val timetableViewModel: TimetableViewModel by lazy {
         ViewModelProvider(this)[TimetableViewModel::class.java]
@@ -52,20 +47,13 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
 //            updateWorkoutUI()
 //        }
 
-
-        recyclerView = binding.recyclerView
-
-
-        recyclerViewClass = TimetableDateRecyclerView(inflater, recyclerView)
-        recyclerViewClass.onStart()
+        recyclerViewClass = TimetableDateRecyclerView(inflater, binding.recyclerView)
 
         recyclerViewListClass = TimetableListRecyclerView(
             inflater,
-            this@TimetableFragment,
-            binding.workoutRecyclerView)
-        recyclerViewListClass.onStart(timetableViewModel.allWorkout)
-
-        updateUI()
+            this,
+            binding.workoutRecyclerView
+        )
 
         return binding.root
     }
@@ -79,7 +67,7 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
             if (recyclerItemCurrentPosition != 27)
                 recyclerItemCurrentPosition +=7
 
-            recyclerView.scrollToPosition(recyclerItemCurrentPosition)
+            binding.recyclerView.scrollToPosition(recyclerItemCurrentPosition)
         }
 
         binding.dateButtonBack.setOnClickListener {
@@ -88,20 +76,15 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
             else
                 recyclerItemCurrentPosition = 6
 
-            recyclerView.scrollToPosition(recyclerItemCurrentPosition-6)
+            binding.recyclerView.scrollToPosition(recyclerItemCurrentPosition-6)
+        }
+
+        recyclerViewClass.onStart()
+
+        timetableViewModel.getWorkouts().observe(this){
+            recyclerViewListClass.onStart(it)
         }
     }
-
-
-
-
-    private fun updateUI(){
-//        workoutRecyclerViewConstant = hostActivity.mainViewModel.allWorkout
-//        adapter = RecyclerViewAdapter(recyclerViewConstants)
-//        recyclerView.adapter = adapter
-    }
-
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

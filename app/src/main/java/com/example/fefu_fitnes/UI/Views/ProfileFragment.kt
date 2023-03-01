@@ -39,7 +39,9 @@ class ProfileFragment: Fragment() {
     override fun onStart() {
         super.onStart()
 
-        binding.name.text = "${profileViewModel.currentUser.firstName} ${profileViewModel.currentUser.secondName}"
+        profileViewModel.getUser().observe(this) {
+            binding.name.text = "${it.firstName} ${it.secondName}"
+        }
     }
 
     override fun onAttach(context: Context) {
