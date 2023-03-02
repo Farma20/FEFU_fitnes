@@ -29,9 +29,11 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     }
 
     override fun onWorkoutSelected( i: Int ) {
-        val currentWorkout: UpdateEventDataModel? = timetableViewModel.getEvents().value?.get(i-2)
-        if (currentWorkout != null) {
-            timetableViewModel.setMainEvent(currentWorkout)
+            for(event in allEventsList){
+            if (event.eventId == i){
+                timetableViewModel.setMainEvent(event)
+                break
+            }
         }
     }
 
