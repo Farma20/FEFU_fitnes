@@ -1,5 +1,5 @@
 package com.example.fefu_fitnes.UI.Models
 
-data class EventsDataModel(
+data class NewsDataModel(
     var textEvent:String = ""
 )

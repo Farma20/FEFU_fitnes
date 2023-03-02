@@ -1,15 +1,11 @@
-package com.example.fefu_fitnes.data.Repository
+package com.example.fefu_fitnes.dadadada.Repository
 
-import android.service.autofill.UserData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fefu_fitnes.Data.FitnessApi
-import com.example.fefu_fitnes.UI.Models.EventsDataModel
-import com.example.fefu_fitnes.UI.Models.ServicesModel
-import com.example.fefu_fitnes.UI.Models.UserDataModel
-import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
+import com.example.fefu_fitnes.UI.Models.*
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -23,10 +19,10 @@ import java.io.IOException
 object MainRepository: ViewModel() {
 
     private val currentUser = MutableLiveData<UserDataModel>()
-    private val currentEvents = MutableLiveData<List<EventsDataModel>>()
-    private val currentWorkout = MutableLiveData<WorkoutDataModel>()
+    private val currentNews = MutableLiveData<List<NewsDataModel>>()
+    private val currentEvent = MutableLiveData<UpdateEventDataModel>()
     private val allServices = MutableLiveData<List<ServicesModel>>()
-    private val allWorkout = MutableLiveData<List<WorkoutDataModel>>()
+    private val allEvent = MutableLiveData<List<UpdateEventDataModel>>()
 
     //связь с API
     private val gson = Gson()
@@ -44,45 +40,34 @@ object MainRepository: ViewModel() {
         return result
     }
 
-    fun getAllWorkoutFromServer():LiveData<Array<WorkoutDataModel>>{
+//    fun getAllWorkoutFromServer():LiveData<Array<WorkoutDataModel>>{
+//
+//        val result = MutableLiveData<Array<WorkoutDataModel>>()
+//        viewModelScope.launch {
+//            try {
+//                val listResult = FitnessApi.retrofitService.getWorkout()
+//                result.postValue(gson.fromJson(listResult, Array<WorkoutDataModel>::class.java))
+//            }catch (e:Exception){
+//                result.postValue(allWorkout.value?.toTypedArray())
+//            }
+//        }
+//        return result
+//    }
 
-        val result = MutableLiveData<Array<WorkoutDataModel>>()
+    fun getAllEventFromServer():LiveData<Array<EventDataModel>>{
+
+        val result = MutableLiveData<Array<EventDataModel>>()
         viewModelScope.launch {
             try {
-                val listResult = FitnessApi.retrofitService.getWorkout()
-                result.postValue(gson.fromJson(listResult, Array<WorkoutDataModel>::class.java))
+                val listResult = FitnessApi.retrofitService.getAllEvents()
+                result.postValue(gson.fromJson(listResult, Array<EventDataModel>::class.java))
             }catch (e:Exception){
-                result.postValue(allWorkout.value?.toTypedArray())
+                println("MainRepository нет соединения с сервером")
             }
         }
         return result
     }
 
-    fun getEventsFromServer(): LiveData<Array<EventsDataModel>>{
-        val result = MutableLiveData<Array<EventsDataModel>>()
-        viewModelScope.launch {
-            try {
-                val listResult = FitnessApi.retrofitService.getWorkout()
-                result.postValue(gson.fromJson(listResult, Array<EventsDataModel>::class.java))
-            }catch (e:Exception){
-                result.postValue(currentEvents.value?.toTypedArray())
-            }
-        }
-        return result
-    }
-
-    fun getServicesFromServer(): LiveData<Array<ServicesModel>>{
-        val result = MutableLiveData<Array<ServicesModel>>()
-        viewModelScope.launch {
-            try {
-                val listResult = FitnessApi.retrofitService.getWorkout()
-                result.postValue(gson.fromJson(listResult, Array<ServicesModel>::class.java))
-            }catch (e:Exception){
-                result.postValue(allServices.value?.toTypedArray())
-            }
-        }
-        return result
-    }
 
     fun postMessage( id: Int){
 
@@ -112,16 +97,16 @@ object MainRepository: ViewModel() {
         return currentUser
     }
 
-    fun getEvents(): LiveData<List<EventsDataModel>> {
-        return currentEvents
+    fun getNews(): LiveData<List<NewsDataModel>> {
+        return currentNews
     }
 
-    fun getWorkout(): LiveData<WorkoutDataModel> {
-        return currentWorkout
+    fun getEvent(): LiveData<UpdateEventDataModel> {
+        return currentEvent
     }
 
-    fun getWorkouts():LiveData<List<WorkoutDataModel>>{
-        return allWorkout
+    fun getEvents():LiveData<List<UpdateEventDataModel>>{
+        return allEvent
     }
 
     fun getServices():LiveData<List<ServicesModel>>{
@@ -133,16 +118,16 @@ object MainRepository: ViewModel() {
         currentUser.value = user
     }
 
-    fun setAllWorkouts(workouts: List<WorkoutDataModel>){
-        allWorkout.value = workouts
+    fun setAllEvents(workouts: List<UpdateEventDataModel>){
+        allEvent.value = workouts
     }
 
-    fun setWorkout(workout:WorkoutDataModel){
-        currentWorkout.value = workout
+    fun setEvent(workout:UpdateEventDataModel){
+        currentEvent.value = workout
     }
 
-    fun setEvents(events:List<EventsDataModel>){
-        currentEvents.value = events
+    fun setNews(events:List<NewsDataModel>){
+        currentNews.value = events
     }
 
     fun setServices(services:List<ServicesModel>){
@@ -152,15 +137,15 @@ object MainRepository: ViewModel() {
 
     init {
         currentUser.value = UserDataModel("Райан", "Гослинг", "№583057349", "0 занятий")
-        currentEvents.value = listOf(
-            EventsDataModel("Чемпионат АССК по настольному теннису"),
-            EventsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
-            EventsDataModel("Чем заняться в свободное время на каникулах?"),
-            EventsDataModel("Чемпионат АССК по настольному теннису"),
-            EventsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
-            EventsDataModel("Чем заняться в свободное время на каникулах?")
+        currentNews.value = listOf(
+            NewsDataModel("Чемпионат АССК по настольному теннису"),
+            NewsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
+            NewsDataModel("Чем заняться в свободное время на каникулах?"),
+            NewsDataModel("Чемпионат АССК по настольному теннису"),
+            NewsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
+            NewsDataModel("Чем заняться в свободное время на каникулах?")
         )
-        currentWorkout.value = WorkoutDataModel()
+        currentEvent.value = UpdateEventDataModel()
 
 //        0,
 //        "Групповое занятие по аэробике",
@@ -182,71 +167,81 @@ object MainRepository: ViewModel() {
             ServicesModel("Гостям кампуса", "— 5 посещений", "1400"),
         )
 
-        allWorkout.value = listOf(
-            WorkoutDataModel(
+        allEvent.value = listOf(
+            UpdateEventDataModel(
                 0,
                 "Групповое занятие по аэробике",
-                "14:00 - 16:00",
+                "14-12-2022",
+                "14:00",
+                "16:00",
                 "Корпус S, зал аэробики",
                 "Пердун Юлия Олеговна",
-                "Оплачено",
-                "3/25",
                 "8 (999) 618 10",
                 "96kerdun.iuol@dvfu.ru",
+                25,
+                3,
                 "Степ аэробика – это специализированный тренинг, который идеально подходит для похудения, проработки мышц ног и ягодиц. Занятие на степ платформе состоит из набора базовых шагов. Они объединены в комбинации и выполняются в разных вариациях, которые отличаются по типу сложности. За счет изменения высоты шага уменьшается или увеличивается нагрузка.",
             ),
-            WorkoutDataModel(
-                1,
+
+            UpdateEventDataModel(
+                0,
                 "Групповое занятие по аэробике",
-                "14:00 - 16:00",
+                "14-12-2022",
+                "14:00",
+                "16:00",
                 "Корпус S, зал аэробики",
                 "Пердун Юлия Олеговна",
-                "Оплачено",
-                "3/25",
                 "8 (999) 618 10",
                 "96kerdun.iuol@dvfu.ru",
-                "Степ аэробика – это специализированный тренинг, который идеально подходит для похудения, проработки мышц ног и ягодиц. Занятие на степ платформе состоит из набора базовых шагов. Они объединены в комбинации и выполняются в разных вариациях, которые отличаются по типу сложности. За счет изменения высоты шага уменьшается или увеличивается нагрузка.",
-
-                ),
-            WorkoutDataModel(
-                2,
-                "Групповое занятие по аэробике",
-                "14:00 - 16:00",
-                "Корпус S, зал аэробики",
-                "Пердун Юлия Олеговна",
-                "Оплачено",
-                "3/25",
-                "8 (999) 618 10",
-                "96kerdun.iuol@dvfu.ru",
-                "Степ аэробика – это специализированный тренинг, который идеально подходит для похудения, проработки мышц ног и ягодиц. Занятие на степ платформе состоит из набора базовых шагов. Они объединены в комбинации и выполняются в разных вариациях, которые отличаются по типу сложности. За счет изменения высоты шага уменьшается или увеличивается нагрузка.",
-
-                ),
-            WorkoutDataModel(
+                25,
                 3,
+                "Степ аэробика – это специализированный тренинг, который идеально подходит для похудения, проработки мышц ног и ягодиц. Занятие на степ платформе состоит из набора базовых шагов. Они объединены в комбинации и выполняются в разных вариациях, которые отличаются по типу сложности. За счет изменения высоты шага уменьшается или увеличивается нагрузка.",
+            ),
+
+            UpdateEventDataModel(
+                0,
                 "Групповое занятие по аэробике",
-                "14:00 - 16:00",
+                "14-12-2022",
+                "14:00",
+                "16:00",
                 "Корпус S, зал аэробики",
                 "Пердун Юлия Олеговна",
-                "Оплачено",
-                "3/25",
                 "8 (999) 618 10",
                 "96kerdun.iuol@dvfu.ru",
+                25,
+                3,
                 "Степ аэробика – это специализированный тренинг, который идеально подходит для похудения, проработки мышц ног и ягодиц. Занятие на степ платформе состоит из набора базовых шагов. Они объединены в комбинации и выполняются в разных вариациях, которые отличаются по типу сложности. За счет изменения высоты шага уменьшается или увеличивается нагрузка.",
+            ),
 
-                ),
-            WorkoutDataModel(
-                4,
+            UpdateEventDataModel(
+                0,
                 "Групповое занятие по аэробике",
-                "14:00 - 16:00",
+                "14-12-2022",
+                "14:00",
+                "16:00",
                 "Корпус S, зал аэробики",
                 "Пердун Юлия Олеговна",
-                "Оплачено",
-                "3/25",
                 "8 (999) 618 10",
                 "96kerdun.iuol@dvfu.ru",
+                25,
+                3,
                 "Степ аэробика – это специализированный тренинг, который идеально подходит для похудения, проработки мышц ног и ягодиц. Занятие на степ платформе состоит из набора базовых шагов. Они объединены в комбинации и выполняются в разных вариациях, которые отличаются по типу сложности. За счет изменения высоты шага уменьшается или увеличивается нагрузка.",
+            ),
 
-                )
+            UpdateEventDataModel(
+                0,
+                "Групповое занятие по аэробике",
+                "14-12-2022",
+                "14:00",
+                "16:00",
+                "Корпус S, зал аэробики",
+                "Пердун Юлия Олеговна",
+                "8 (999) 618 10",
+                "96kerdun.iuol@dvfu.ru",
+                25,
+                3,
+                "Степ аэробика – это специализированный тренинг, который идеально подходит для похудения, проработки мышц ног и ягодиц. Занятие на степ платформе состоит из набора базовых шагов. Они объединены в комбинации и выполняются в разных вариациях, которые отличаются по типу сложности. За счет изменения высоты шага уменьшается или увеличивается нагрузка.",
+            ),
         )
     }
 

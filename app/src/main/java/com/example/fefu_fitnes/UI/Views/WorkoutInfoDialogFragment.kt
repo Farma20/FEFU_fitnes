@@ -1,5 +1,6 @@
 package com.example.fefu_fitnes.UI.Views
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,11 +12,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.WorkoutInfoDialogRecyclerView
+import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.databinding.DialogFragmentWorkoutInfoBinding
 import com.example.fefu_fitnes.databinding.FragmentMainMenuBinding
 
-class WorkoutInfoDialogFragment(val dialogWorkoutData:WorkoutDataModel):DialogFragment() {
+class WorkoutInfoDialogFragment(private val dialogEventData: UpdateEventDataModel):DialogFragment() {
 
     lateinit var recyclerView: RecyclerView
 
@@ -42,17 +44,17 @@ class WorkoutInfoDialogFragment(val dialogWorkoutData:WorkoutDataModel):DialogFr
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
-        binding.nearWorkoutName.text = dialogWorkoutData.workoutName
-        binding.nearWorkoutSpaceCount.text = dialogWorkoutData.freeSpaces
-        binding.nearWorkoutTime.text = dialogWorkoutData.workoutTime
-        binding.nearWorkoutPaymentStatusPaid.text = dialogWorkoutData.paymentStatus
-        binding.nearWorkoutCouchName.text = dialogWorkoutData.couchName
-        binding.couchNumber.text = dialogWorkoutData.couchPhone
-        binding.couchMail.text = dialogWorkoutData.couchEmail
-        binding.nearWorkoutLocation.text = dialogWorkoutData.workoutLocation
-        binding.workoutDescription.text = dialogWorkoutData.workoutDescription
+        binding.nearWorkoutName.text = dialogEventData.eventName
+        binding.nearWorkoutSpaceCount.text = dialogEventData.occupiedSpaces.toString() + "/"+ dialogEventData.totalSpaces.toString()
+        binding.nearWorkoutTime.text = dialogEventData.startEventTime + " - " + dialogEventData.endEventTime
+        binding.nearWorkoutCouchName.text = dialogEventData.couchName
+        binding.couchNumber.text = dialogEventData.couchPhone
+        binding.couchMail.text = dialogEventData.couchEmail
+        binding.nearWorkoutLocation.text = dialogEventData.eventLocation
+        binding.workoutDescription.text = dialogEventData.eventDescription
     }
 
     override fun getTheme() = R.style.MyDialog
@@ -69,9 +71,9 @@ class WorkoutInfoDialogFragment(val dialogWorkoutData:WorkoutDataModel):DialogFr
 
 
     companion object{
-        fun newInstance(workoutData: WorkoutDataModel):WorkoutInfoDialogFragment{
+        fun newInstance(eventData: UpdateEventDataModel):WorkoutInfoDialogFragment{
 
-            return WorkoutInfoDialogFragment(workoutData)
+            return WorkoutInfoDialogFragment(eventData)
         }
     }
     

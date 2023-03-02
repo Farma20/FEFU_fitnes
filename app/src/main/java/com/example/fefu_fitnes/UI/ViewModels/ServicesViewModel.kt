@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fefu_fitnes.UI.Models.ServicesModel
-import com.example.fefu_fitnes.data.Repository.MainRepository
+import com.example.fefu_fitnes.dadadada.Repository.MainRepository
 
 class ServicesViewModel:ViewModel() {
 
@@ -20,11 +20,6 @@ class ServicesViewModel:ViewModel() {
     }
 
     init {
-
-        val resultServicesUpdate = MainRepository.getServicesFromServer()
-        resultServicesUpdate.observeForever{
-            MainRepository.setServices(it.toList())
-        }
 
         MainRepository.getServices().observeForever{
             allServices.value = it

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fefu_fitnes.UI.Models.UserDataModel
-import com.example.fefu_fitnes.data.Repository.MainRepository
+import com.example.fefu_fitnes.dadadada.Repository.MainRepository
 
 class ProfileViewModel:ViewModel() {
 

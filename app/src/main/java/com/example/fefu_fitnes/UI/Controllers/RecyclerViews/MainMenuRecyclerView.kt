@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
-import com.example.fefu_fitnes.UI.Models.EventsDataModel
+import com.example.fefu_fitnes.UI.Models.NewsDataModel
 
 class MainMenuRecyclerView(val inflater: LayoutInflater, val recyclerView: RecyclerView) {
 
-    fun onStart(events:List<EventsDataModel>){
+    fun onStart(events:List<NewsDataModel>){
         recyclerView.adapter = RecyclerAdapter(events)
     }
 
-    private inner class RecyclerAdapter(var events:List<EventsDataModel>):
+    private inner class RecyclerAdapter(var events:List<NewsDataModel>):
         RecyclerView.Adapter<RecyclerViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {

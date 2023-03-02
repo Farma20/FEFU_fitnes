@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.fefu_fitnes.R
-import com.example.fefu_fitnes.UI.Models.UserDataModel
 import com.example.fefu_fitnes.UI.ViewModels.MainViewModel
-import com.example.fefu_fitnes.data.Repository.MainRepository
 import com.example.fefu_fitnes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

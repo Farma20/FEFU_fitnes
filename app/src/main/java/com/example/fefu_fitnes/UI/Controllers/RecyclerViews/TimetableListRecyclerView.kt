@@ -1,5 +1,6 @@
 package com.example.fefu_fitnes.UI.Controllers.RecyclerViews
 
+import android.annotation.SuppressLint
 import android.text.format.Time
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
+import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.UI.Views.TimetableFragment
 import com.example.fefu_fitnes.UI.Views.WorkoutInfoAllDialogFragment
@@ -19,12 +21,12 @@ class TimetableListRecyclerView(
 
     private var allWorkoutItems = mutableListOf<View>()
 
-    fun onStart(workoutData:List<WorkoutDataModel>){
+    fun onStart(workoutData:List<UpdateEventDataModel>){
         recyclerView.adapter = WorkoutRecyclerViewAdapter(workoutData)
     }
 
 
-    private inner class WorkoutRecyclerViewAdapter(val data: List<WorkoutDataModel>):
+    private inner class WorkoutRecyclerViewAdapter(val data: List<UpdateEventDataModel>):
         RecyclerView.Adapter<WorkoutRecyclerViewHolder>(){
         override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -45,6 +47,7 @@ class TimetableListRecyclerView(
             return position
         }
 
+        @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: WorkoutRecyclerViewHolder, position: Int) {
             val item = data[position]
 
@@ -56,16 +59,12 @@ class TimetableListRecyclerView(
             }
 
 
-            holder.workoutName.text = item.workoutName
+            holder.workoutName.text = item.eventName
             holder.trainerName.text = item.couchName
-            holder.location.text = item.workoutLocation
-            holder.time.text = item.workoutTime
-            holder.spaceCount.text = item.freeSpaces
+            holder.location.text = item.eventLocation
+            holder.time.text = item.startEventTime + " - " + item.endEventTime
+            holder.spaceCount.text = item.occupiedSpaces.toString() + "/"+ item.totalSpaces.toString()
 
-            if(item.paymentStatus == "Вы записаны"){
-                holder.status.visibility = View.GONE
-                holder.statusOk.visibility = View.VISIBLE
-            }
         }
 
         override fun getItemCount(): Int {

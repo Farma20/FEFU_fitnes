@@ -36,20 +36,6 @@ class MainMenuFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-//        val result = hostActivity.mainViewModel.getUserData()
-//        result.observe(this.viewLifecycleOwner) { res ->
-//
-//            hostActivity.mainViewModel.user = UserDataModel(
-//                firstName = res.firstName,
-//                secondName = res.secondName,
-//                cardNumber = res.cardNumber,
-//                workoutCount = res.workoutCount
-//            )
-//            println(res)
-//            updateUI()
-//
-//        }
-
         _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
 
         recyclerView = binding.mainRecyclerView
@@ -69,13 +55,13 @@ class MainMenuFragment: Fragment() {
             binding.workoutCount.text = it.workoutCount
         }
 
-        mainMenuViewModel.getEvents().observe(this){
+        mainMenuViewModel.getNews().observe(this){
             recyclerClass.onStart(it)
         }
 
         mainMenuViewModel.getWorkout().observe(this){
             val data = it
-            if(data.workoutName != ""){
+            if(data.eventName != ""){
 
                 binding.apply {
                     nearWorkoutHolder.setOnClickListener{
@@ -87,12 +73,11 @@ class MainMenuFragment: Fragment() {
                     nearWorkoutTextHide.visibility = View.GONE
                     nearWorkoutSpaceCountTitle.visibility = View.VISIBLE
 
-                    nearWorkoutName.text = data.workoutName
-                    nearWorkoutTime.text = data.workoutTime
-                    nearWorkoutLocation.text = data.workoutLocation
+                    nearWorkoutName.text = data.eventName
+                    nearWorkoutTime.text = data.startEventTime + " - " + data.endEventTime
+                    nearWorkoutLocation.text = data.eventLocation
                     nearWorkoutCouchName.text = data.couchName
-                    nearWorkoutSpaceCount.text = data.freeSpaces
-                    nearWorkoutPaymentStatusPaid.text = data.paymentStatus
+                    nearWorkoutSpaceCount.text = data.occupiedSpaces.toString() + "/"+ data.totalSpaces.toString()
                 }
             }
         }

@@ -1,25 +1,11 @@
 package com.example.fefu_fitnes.UI.ViewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.fefu_fitnes.Data.FitnessApi
-import com.example.fefu_fitnes.Data.RegistrationBody
-import com.example.fefu_fitnes.R
-import com.example.fefu_fitnes.UI.Models.EventsDataModel
+import com.example.fefu_fitnes.UI.Models.NewsDataModel
 import com.example.fefu_fitnes.UI.Models.ServicesModel
 import com.example.fefu_fitnes.UI.Models.UserDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
-import com.google.gson.Gson
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import java.io.IOException
+
 
 
 class MainViewModel:ViewModel(){
@@ -28,13 +14,13 @@ class MainViewModel:ViewModel(){
         "Райан", "Гослинг", "№583057349", "0 занятий"
     )
 
-    var events:List<EventsDataModel> = listOf(
-        EventsDataModel("Чемпионат АССК по настольному теннису"),
-        EventsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
-        EventsDataModel("Чем заняться в свободное время на каникулах?"),
-        EventsDataModel("Чемпионат АССК по настольному теннису"),
-        EventsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
-        EventsDataModel("Чем заняться в свободное время на каникулах?")
+    var events:List<NewsDataModel> = listOf(
+        NewsDataModel("Чемпионат АССК по настольному теннису"),
+        NewsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
+        NewsDataModel("Чем заняться в свободное время на каникулах?"),
+        NewsDataModel("Чемпионат АССК по настольному теннису"),
+        NewsDataModel("III этап зимнего сезона Студенческой Гребной Лиги"),
+        NewsDataModel("Чем заняться в свободное время на каникулах?")
     )
 
     var nearWorkout = WorkoutDataModel()

@@ -1,5 +1,6 @@
 package com.example.fefu_fitnes.UI.Views
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
@@ -14,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.WorkoutInfoDialogRecyclerView
+import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.databinding.DialogFragmentWorkoutAllInfoBinding
 import okhttp3.MediaType.Companion.toMediaType
@@ -24,7 +26,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
 
-class WorkoutInfoAllDialogFragment(val dialogWorkoutData:WorkoutDataModel):DialogFragment() {
+class WorkoutInfoAllDialogFragment(val dialogEventData: UpdateEventDataModel):DialogFragment() {
 
     private lateinit var hostActivity: MainActivity
 
@@ -57,18 +59,19 @@ class WorkoutInfoAllDialogFragment(val dialogWorkoutData:WorkoutDataModel):Dialo
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
-        binding.apply {
-            nearWorkoutName.text = dialogWorkoutData.workoutName
-            nearWorkoutSpaceCount.text = dialogWorkoutData.freeSpaces
-            nearWorkoutTime.text = dialogWorkoutData.workoutTime
-            nearWorkoutCouchName.text = dialogWorkoutData.couchName
-            couchNumber.text = dialogWorkoutData.couchPhone
-            couchMail.text = dialogWorkoutData.couchEmail
-            nearWorkoutLocation.text = dialogWorkoutData.workoutLocation
-            workoutDescription.text = dialogWorkoutData.workoutDescription
-        }
+
+        binding.nearWorkoutName.text = dialogEventData.eventName
+        binding.nearWorkoutSpaceCount.text = dialogEventData.occupiedSpaces.toString() + "/"+ dialogEventData.totalSpaces.toString()
+        binding.nearWorkoutTime.text = dialogEventData.startEventTime + " - " + dialogEventData.endEventTime
+        binding.nearWorkoutCouchName.text = dialogEventData.couchName
+        binding.couchNumber.text = dialogEventData.couchPhone
+        binding.couchMail.text = dialogEventData.couchEmail
+        binding.nearWorkoutLocation.text = dialogEventData.eventLocation
+        binding.workoutDescription.text = dialogEventData.eventDescription
+
 
         binding.nearWorkoutPaymentStatusPaid3.setOnClickListener{
 
@@ -76,7 +79,7 @@ class WorkoutInfoAllDialogFragment(val dialogWorkoutData:WorkoutDataModel):Dialo
             binding.nearWorkoutPaymentStatusPaid.visibility = View.VISIBLE
 
             targetFragment?.let{fragment ->
-                (fragment as Callback).onWorkoutSelected(dialogWorkoutData.workoutId)
+                (fragment as Callback).onWorkoutSelected(dialogEventData.eventId)
             }
 
 //            Thread {
@@ -104,9 +107,8 @@ class WorkoutInfoAllDialogFragment(val dialogWorkoutData:WorkoutDataModel):Dialo
 
 
     companion object{
-        fun newInstance(workoutData: WorkoutDataModel):WorkoutInfoAllDialogFragment{
-
-            return WorkoutInfoAllDialogFragment(workoutData)
+        fun newInstance(eventData: UpdateEventDataModel):WorkoutInfoAllDialogFragment{
+            return WorkoutInfoAllDialogFragment(eventData)
         }
     }
     

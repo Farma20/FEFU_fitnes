@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableDateRecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableListRecyclerView
+import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.UI.ViewModels.TimetableViewModel
 import com.example.fefu_fitnes.databinding.FragmentTimetableBinding
+
 
 
 class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
@@ -29,10 +29,9 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     }
 
     override fun onWorkoutSelected( i: Int ) {
-        val currentWorkout:WorkoutDataModel? = timetableViewModel.getWorkouts().value?.get(i)
-        currentWorkout?.paymentStatus = "Вы записанны"
+        val currentWorkout: UpdateEventDataModel? = timetableViewModel.getEvents().value?.get(i)
         if (currentWorkout != null) {
-            timetableViewModel.setMainWorkout(currentWorkout)
+            timetableViewModel.setMainEvent(currentWorkout)
         }
     }
 
@@ -85,7 +84,7 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
 
         recyclerViewClass.onStart()
 
-        timetableViewModel.getWorkouts().observe(this){
+        timetableViewModel.getEvents().observe(this){
             recyclerViewListClass.onStart(it)
         }
     }

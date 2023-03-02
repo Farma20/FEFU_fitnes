@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 
-private const val BASE_URL = "http://172.20.10.2"
+private const val BASE_URL = "http://172.20.10.4"
 
 //начальная настройка ретрофит и кенвертора json в string
 private val retrofit = Retrofit.Builder()
@@ -25,17 +25,10 @@ interface FitnessApiService{  //интерфейс общения клиента
     suspend fun getUserData():String
 
     @GET("/api/event/getAllEvent")
-    suspend fun getWorkout():String
-
-    @GET("/api/event/getEvents")
-    suspend fun getEvents():String
-
-    @GET("/api/event/getServices")
-    suspend fun getServices():String
+    suspend fun getAllEvents():String
 
     @POST("/api/booking/addNewBooking")
     suspend fun registerUser(@Body registrationBody: RegistrationBody) : String
-
 }
 
 object FitnessApi{ //глобальный объект, создающий ретрофит
