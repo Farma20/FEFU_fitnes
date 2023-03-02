@@ -32,11 +32,16 @@ class TimetableViewModel:ViewModel() {
 
             val startDateTime:List<String> = event.beginTime.split("\\s".toRegex())
             val endDateTime: List<String> = event.endTime.split("\\s".toRegex())
+            val dateDay: String = if(startDateTime[0][startDateTime[0].length-2] != '0'){
+                startDateTime[0].substring(startDateTime[0].length - 2)
+            }else{
+                startDateTime[0].substring(startDateTime[0].length - 2)[1].toString()
+            }
 
             val uEventDataModel = UpdateEventDataModel(
                 event.eventId,
                 event.eventName,
-                startDateTime[0],
+                dateDay,
                 startDateTime[1].substring(0, startDateTime[1].length - 3),
                 endDateTime[1].substring(0, endDateTime[1].length - 3),
                 event.eventLocation,
@@ -48,6 +53,7 @@ class TimetableViewModel:ViewModel() {
                 event.eventDescription
             )
             updateEventDataModels.add(uEventDataModel)
+            println(dateDay)
         }
         return updateEventDataModels
     }

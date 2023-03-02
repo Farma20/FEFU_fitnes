@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 
-private const val BASE_URL = "http://172.20.10.4"
+private const val BASE_URL = "http://188.127.225.179/"
 
 //начальная настройка ретрофит и кенвертора json в string
 private val retrofit = Retrofit.Builder()

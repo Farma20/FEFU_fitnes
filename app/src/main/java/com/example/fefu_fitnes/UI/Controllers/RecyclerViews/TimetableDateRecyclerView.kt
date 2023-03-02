@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
@@ -15,6 +17,7 @@ class TimetableDateRecyclerView(
     val inflater: LayoutInflater,
     private val dateRecyclerView: RecyclerView){
 
+    private var currentData = MutableLiveData<Int>()
     private var allRecyclerItems = mutableListOf<View>()
 
     val myLinearLayoutManager = object :
@@ -25,49 +28,71 @@ class TimetableDateRecyclerView(
         }
     }
 
-
     private val recyclerViewConstants = listOf(
-        listOf("пн", "1"), listOf("вт", "2"), listOf("ср", "3"), listOf("чт", "4"),
-        listOf("пт", "5"), listOf("сб", "6"), listOf("вс", "7"), listOf("пн", "8"),
-        listOf("вт", "9"), listOf("ср", "10"), listOf("чт", "11"), listOf("пт", "12"),
-        listOf("сб", "13"), listOf("вс", "14"), listOf("пн", "15"), listOf("вт", "16"),
-        listOf("ср", "17"), listOf("чт", "18"), listOf("пт", "19"), listOf("сб", "20"),
-        listOf("вс", "21"), listOf("пн", "22"), listOf("вт", "23"), listOf("ср", "24"),
-        listOf("чт", "25"), listOf("пт", "26"), listOf("сб", "27"), listOf("вс", "28"),
+        mutableListOf("пн", "27", "false"), mutableListOf("вт", "28", "false"), mutableListOf("ср", "1", "false"), mutableListOf("чт", "2", "false"),
+        mutableListOf("пт", "3", "true"), mutableListOf("сб", "4", "false"), mutableListOf("вс", "5", "false"), mutableListOf("пн", "6", "false"),
+        mutableListOf("вт", "7", "false"), mutableListOf("ср", "8", "false"), mutableListOf("чт", "9", "false"), mutableListOf("пт", "10", "false"),
+        mutableListOf("сб", "11", "false"), mutableListOf("вс", "12", "false"), mutableListOf("пн", "13", "false"), mutableListOf("вт", "14", "false"),
+        mutableListOf("ср", "15", "false"), mutableListOf("чт", "16", "false"), mutableListOf("пт", "17", "false"), mutableListOf("сб", "18", "false"),
+        mutableListOf("вс", "19", "false"), mutableListOf("пн", "20", "false"), mutableListOf("вт", "21", "false"), mutableListOf("ср", "22", "false"),
+        mutableListOf("чт", "23", "false"), mutableListOf("пт", "24", "false"), mutableListOf("сб", "25", "false"), mutableListOf("вс", "26", "false"),
     )
 
     fun onStart(){
         dateRecyclerView.layoutManager = myLinearLayoutManager
         dateRecyclerView.adapter = RecyclerViewAdapter(recyclerViewConstants)
+        currentData.value = 3
     }
 
-    private inner class RecyclerViewAdapter(val data:List<List<String>>):
+    fun getCurrentData(): LiveData<Int> {
+        return currentData
+    }
+
+    private inner class RecyclerViewAdapter(val data:List<MutableList<String>>):
         RecyclerView.Adapter<RecyclerViewHolder>(){
         @SuppressLint("SetTextI18n")
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
             val view = inflater.inflate(R.layout.item_day_timetable_unchecked, parent, false)
-            allRecyclerItems.add(view)
-            view.setOnClickListener{
-                for (item in allRecyclerItems){
-                    if (item != it)
-                        item.setBackgroundResource(R.drawable.timetable_item_day_unchecked)
-                }
 
-                it.setBackgroundResource(R.drawable.timetable_item_day_checked)
-            }
             return RecyclerViewHolder(view)
         }
 
 
-        override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-            val item = data[position]
 
-            if (position == 0)
+        override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+//            if (position == 4)
+//                holder.parent.setBackgroundResource(R.drawable.timetable_item_day_checked)
+            allRecyclerItems.add(holder.parent)
+            holder.parent.setBackgroundResource(R.drawable.timetable_item_day_unchecked)
+            if(data[position][2] == "true"){
                 holder.parent.setBackgroundResource(R.drawable.timetable_item_day_checked)
+            }
+            holder.parent.setOnClickListener{
+                for(item in allRecyclerItems){
+                    item.setBackgroundResource(R.drawable.timetable_item_day_unchecked)
+                }
+
+                data[position][2] = "true"
+                currentData.value = data[position][1].toInt()
+
+                for (pos in data.indices){
+                    if(data[pos] !=  data[position]){
+                        data[pos][2] = "false"
+                    }
+                }
+
+                if(data[position][2] == "true"){
+                    holder.parent.setBackgroundResource(R.drawable.timetable_item_day_checked)
+                }
+                else{
+                    holder.parent.setBackgroundResource(R.drawable.timetable_item_day_unchecked)
+                }
+            }
+
 
             holder.apply {
-                textDay.text = item[0]
-                textNumber.text = item[1]
+                textDay.text = data[position][0]
+                textNumber.text = data[position][1]
             }
         }
 

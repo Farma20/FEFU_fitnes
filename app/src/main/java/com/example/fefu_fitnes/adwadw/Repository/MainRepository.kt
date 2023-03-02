@@ -40,19 +40,6 @@ object MainRepository: ViewModel() {
         return result
     }
 
-//    fun getAllWorkoutFromServer():LiveData<Array<WorkoutDataModel>>{
-//
-//        val result = MutableLiveData<Array<WorkoutDataModel>>()
-//        viewModelScope.launch {
-//            try {
-//                val listResult = FitnessApi.retrofitService.getWorkout()
-//                result.postValue(gson.fromJson(listResult, Array<WorkoutDataModel>::class.java))
-//            }catch (e:Exception){
-//                result.postValue(allWorkout.value?.toTypedArray())
-//            }
-//        }
-//        return result
-//    }
 
     fun getAllEventFromServer():LiveData<Array<EventDataModel>>{
 
@@ -171,7 +158,7 @@ object MainRepository: ViewModel() {
             UpdateEventDataModel(
                 0,
                 "Групповое занятие по аэробике",
-                "14-12-2022",
+                "14",
                 "14:00",
                 "16:00",
                 "Корпус S, зал аэробики",
@@ -186,7 +173,7 @@ object MainRepository: ViewModel() {
             UpdateEventDataModel(
                 0,
                 "Групповое занятие по аэробике",
-                "14-12-2022",
+                "14",
                 "14:00",
                 "16:00",
                 "Корпус S, зал аэробики",
@@ -201,7 +188,7 @@ object MainRepository: ViewModel() {
             UpdateEventDataModel(
                 0,
                 "Групповое занятие по аэробике",
-                "14-12-2022",
+                "14",
                 "14:00",
                 "16:00",
                 "Корпус S, зал аэробики",
@@ -216,7 +203,7 @@ object MainRepository: ViewModel() {
             UpdateEventDataModel(
                 0,
                 "Групповое занятие по аэробике",
-                "14-12-2022",
+                "14",
                 "14:00",
                 "16:00",
                 "Корпус S, зал аэробики",
@@ -231,7 +218,7 @@ object MainRepository: ViewModel() {
             UpdateEventDataModel(
                 0,
                 "Групповое занятие по аэробике",
-                "14-12-2022",
+                "14",
                 "14:00",
                 "16:00",
                 "Корпус S, зал аэробики",

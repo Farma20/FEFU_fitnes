@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableDateRecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableListRecyclerView
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
-import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.UI.ViewModels.TimetableViewModel
 import com.example.fefu_fitnes.databinding.FragmentTimetableBinding
 
@@ -23,13 +22,14 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     private lateinit var hostActivity: MainActivity
     private lateinit var recyclerViewClass: TimetableDateRecyclerView
     private lateinit var recyclerViewListClass: TimetableListRecyclerView
+    private var allEventsList = listOf<UpdateEventDataModel>()
 
     private val timetableViewModel: TimetableViewModel by lazy {
         ViewModelProvider(this)[TimetableViewModel::class.java]
     }
 
     override fun onWorkoutSelected( i: Int ) {
-        val currentWorkout: UpdateEventDataModel? = timetableViewModel.getEvents().value?.get(i)
+        val currentWorkout: UpdateEventDataModel? = timetableViewModel.getEvents().value?.get(i-2)
         if (currentWorkout != null) {
             timetableViewModel.setMainEvent(currentWorkout)
         }
@@ -84,9 +84,20 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
 
         recyclerViewClass.onStart()
 
-        timetableViewModel.getEvents().observe(this){
-            recyclerViewListClass.onStart(it)
+        recyclerViewClass.getCurrentData().observe(this){ day ->
+            timetableViewModel.getEvents().observe(this){list ->
+                allEventsList = list
+                val dayEventList = mutableListOf<UpdateEventDataModel>()
+                for(item in allEventsList){
+                    if (item.date.toInt() == day) {
+                        dayEventList.add(item)
+                    }
+                }
+                recyclerViewListClass.onStart(dayEventList)
+            }
         }
+
+
     }
 
     override fun onAttach(context: Context) {
