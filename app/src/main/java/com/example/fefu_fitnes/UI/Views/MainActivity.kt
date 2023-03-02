@@ -19,13 +19,8 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
 
-    //костыльно создаю главный репозиторий (перерделать в дальнейшем)
-    private val mainRepository = MainRepository.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
-
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

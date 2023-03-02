@@ -1,7 +1,9 @@
 package com.example.fefu_fitnes.data.Repository
 
+import android.service.autofill.UserData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fefu_fitnes.Data.FitnessApi
 import com.example.fefu_fitnes.UI.Models.EventsDataModel
@@ -18,7 +20,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
 
-class MainRepository {
+object MainRepository: ViewModel() {
 
     private val currentUser = MutableLiveData<UserDataModel>()
     private val currentEvents = MutableLiveData<List<EventsDataModel>>()
@@ -28,22 +30,57 @@ class MainRepository {
 
     //связь с API
     private val gson = Gson()
-
-    suspend fun getAPIUserData():LiveData<UserDataModel>{
-
+    fun getUserDataFromServer(): LiveData<UserDataModel> {
         val result = MutableLiveData<UserDataModel>()
-        val listResult = FitnessApi.retrofitService.getPhotos()
-        result.postValue(gson.fromJson(listResult, UserDataModel::class.java))
-
+        viewModelScope.launch {
+            try {
+                val listResult = FitnessApi.retrofitService.getUserData()
+                result.postValue(gson.fromJson(listResult, UserDataModel::class.java))
+            }catch (e:Exception){
+                println(e)
+                result.postValue(UserDataModel("Юра", "Гослинг", "№583057349", "0 занятий"))
+            }
+        }
         return result
     }
 
-    suspend fun getAPIWorkout():LiveData<Array<WorkoutDataModel>>{
+    fun getAllWorkoutFromServer():LiveData<Array<WorkoutDataModel>>{
 
         val result = MutableLiveData<Array<WorkoutDataModel>>()
-        val listResult = FitnessApi.retrofitService.getWorkout()
-        result.postValue(gson.fromJson(listResult, Array<WorkoutDataModel>::class.java))
+        viewModelScope.launch {
+            try {
+                val listResult = FitnessApi.retrofitService.getWorkout()
+                result.postValue(gson.fromJson(listResult, Array<WorkoutDataModel>::class.java))
+            }catch (e:Exception){
+                result.postValue(allWorkout.value?.toTypedArray())
+            }
+        }
+        return result
+    }
 
+    fun getEventsFromServer(): LiveData<Array<EventsDataModel>>{
+        val result = MutableLiveData<Array<EventsDataModel>>()
+        viewModelScope.launch {
+            try {
+                val listResult = FitnessApi.retrofitService.getWorkout()
+                result.postValue(gson.fromJson(listResult, Array<EventsDataModel>::class.java))
+            }catch (e:Exception){
+                result.postValue(currentEvents.value?.toTypedArray())
+            }
+        }
+        return result
+    }
+
+    fun getServicesFromServer(): LiveData<Array<ServicesModel>>{
+        val result = MutableLiveData<Array<ServicesModel>>()
+        viewModelScope.launch {
+            try {
+                val listResult = FitnessApi.retrofitService.getWorkout()
+                result.postValue(gson.fromJson(listResult, Array<ServicesModel>::class.java))
+            }catch (e:Exception){
+                result.postValue(allServices.value?.toTypedArray())
+            }
+        }
         return result
     }
 
@@ -92,18 +129,26 @@ class MainRepository {
     }
 
     //Сеттеры
+    fun setUser(user:UserDataModel){
+        currentUser.value = user
+    }
+
+    fun setAllWorkouts(workouts: List<WorkoutDataModel>){
+        allWorkout.value = workouts
+    }
+
     fun setWorkout(workout:WorkoutDataModel){
         currentWorkout.value = workout
     }
 
-    companion object{
-
-        private val instance = MainRepository()
-
-        fun getInstance(): MainRepository{
-            return instance
-        }
+    fun setEvents(events:List<EventsDataModel>){
+        currentEvents.value = events
     }
+
+    fun setServices(services:List<ServicesModel>){
+        allServices.value = services
+    }
+
 
     init {
         currentUser.value = UserDataModel("Райан", "Гослинг", "№583057349", "0 занятий")

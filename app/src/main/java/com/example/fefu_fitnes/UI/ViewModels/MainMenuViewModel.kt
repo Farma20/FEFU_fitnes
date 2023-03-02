@@ -10,8 +10,6 @@ import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.data.Repository.MainRepository
 
 class MainMenuViewModel:ViewModel() {
-    private val mainRepository = MainRepository.getInstance()
-
     private val currentUser = MutableLiveData<UserDataModel>()
     private val currentEvents = MutableLiveData<List<EventsDataModel>>()
     private val currentWorkout = MutableLiveData<WorkoutDataModel>()
@@ -30,17 +28,28 @@ class MainMenuViewModel:ViewModel() {
     }
 
     init {
-        mainRepository.getUser().observeForever{
+        val resultUserUpdate = MainRepository.getUserDataFromServer()
+        resultUserUpdate.observeForever{
+            MainRepository.setUser(it)
+        }
+
+        val resultEventsUpdate = MainRepository.getEventsFromServer()
+        resultEventsUpdate.observeForever{
+            MainRepository.setEvents(it.toList())
+        }
+
+        MainRepository.getUser().observeForever{
             currentUser.value = it
         }
 
-        mainRepository.getEvents().observeForever{
+        MainRepository.getEvents().observeForever{
             currentEvents.value = it
         }
 
-        mainRepository.getWorkout().observeForever{
+        MainRepository.getWorkout().observeForever{
             currentWorkout.value = it
         }
+
     }
 
     override fun onCleared() {

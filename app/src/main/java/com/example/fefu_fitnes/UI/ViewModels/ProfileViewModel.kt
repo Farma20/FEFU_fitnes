@@ -8,8 +8,6 @@ import com.example.fefu_fitnes.data.Repository.MainRepository
 
 class ProfileViewModel:ViewModel() {
 
-    private val mainRepository = MainRepository.getInstance()
-
     private val currentUser = MutableLiveData<UserDataModel>()
 
     //геттеры
@@ -22,7 +20,7 @@ class ProfileViewModel:ViewModel() {
     }
 
     init {
-        mainRepository.getUser().observeForever{
+        MainRepository.getUser().observeForever{
             currentUser.value = it
         }
     }

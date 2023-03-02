@@ -22,10 +22,16 @@ data class RegistrationBody( //Дата класс для передачи ин�
 
 interface FitnessApiService{  //интерфейс общения клиента-сервера
     @GET("/api/user/getAllUserInfo")
-    suspend fun getPhotos():String
+    suspend fun getUserData():String
 
     @GET("/api/event/getAllEvent")
     suspend fun getWorkout():String
+
+    @GET("/api/event/getEvents")
+    suspend fun getEvents():String
+
+    @GET("/api/event/getServices")
+    suspend fun getServices():String
 
     @POST("/api/booking/addNewBooking")
     suspend fun registerUser(@Body registrationBody: RegistrationBody) : String

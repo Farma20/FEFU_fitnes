@@ -8,8 +8,6 @@ import com.example.fefu_fitnes.data.Repository.MainRepository
 
 class TimetableViewModel:ViewModel() {
 
-    private val mainRepository = MainRepository.getInstance()
-
     private val allWorkout = MutableLiveData<List<WorkoutDataModel>>()
 
     //геттеры
@@ -19,7 +17,7 @@ class TimetableViewModel:ViewModel() {
 
     //Передача выбранной тренировки
     fun setMainWorkout(workout:WorkoutDataModel){
-        mainRepository.setWorkout(workout)
+        MainRepository.setWorkout(workout)
     }
 
     override fun onCleared() {
@@ -28,7 +26,13 @@ class TimetableViewModel:ViewModel() {
 
 
     init {
-        mainRepository.getWorkouts().observeForever{
+
+        val result = MainRepository.getAllWorkoutFromServer()
+        result.observeForever{
+            MainRepository.setAllWorkouts(it.toList())
+        }
+
+        MainRepository.getWorkouts().observeForever{
             allWorkout.value = it
         }
 

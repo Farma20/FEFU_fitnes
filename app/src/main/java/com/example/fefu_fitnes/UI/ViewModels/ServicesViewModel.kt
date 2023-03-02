@@ -8,8 +8,6 @@ import com.example.fefu_fitnes.data.Repository.MainRepository
 
 class ServicesViewModel:ViewModel() {
 
-    private val mainRepository = MainRepository.getInstance()
-
     private val allServices = MutableLiveData<List<ServicesModel>>()
 
     //геттеры
@@ -22,7 +20,13 @@ class ServicesViewModel:ViewModel() {
     }
 
     init {
-        mainRepository.getServices().observeForever{
+
+        val resultServicesUpdate = MainRepository.getServicesFromServer()
+        resultServicesUpdate.observeForever{
+            MainRepository.setServices(it.toList())
+        }
+
+        MainRepository.getServices().observeForever{
             allServices.value = it
         }
     }
