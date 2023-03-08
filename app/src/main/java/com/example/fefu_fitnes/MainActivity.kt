@@ -1,12 +1,14 @@
-package com.example.fefu_fitnes.UI.Views
+package com.example.fefu_fitnes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fefu_fitnes.R
+import com.example.fefu_fitnes.UI.RegisterUI.RegisterActivity
 import com.example.fefu_fitnes.UI.ViewModels.MainViewModel
+import com.example.fefu_fitnes.UI.Views.*
 import com.example.fefu_fitnes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -27,12 +29,7 @@ class MainActivity : AppCompatActivity() {
         //отключение темной темы
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-
-        if(currentFragment == null){
-            val fragment = LoginFragment.newInstance()
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
-        }
+        checkInitialization()
 
         binding.main.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main_pick)
 
@@ -69,6 +66,21 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun checkInitialization(){
+        if(false){
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+            if(currentFragment == null){
+                val fragment = LoginFragment.newInstance()
+                supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
+            }
+        }
+        else{
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun onFragmentSelected(fragment: Fragment){

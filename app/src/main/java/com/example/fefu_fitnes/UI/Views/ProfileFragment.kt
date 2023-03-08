@@ -8,10 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.PaymentsRecyclerView
-import com.example.fefu_fitnes.UI.Models.UserDataModel
+import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.UI.ViewModels.ProfileViewModel
-import com.example.fefu_fitnes.databinding.FragmentPaymentsBinding
 import com.example.fefu_fitnes.databinding.FragmentProfileBinding
 
 class ProfileFragment: Fragment() {

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.MainMenuRecyclerView
 import com.example.fefu_fitnes.UI.ViewModels.MainMenuViewModel
 import com.example.fefu_fitnes.databinding.FragmentMainMenuBinding

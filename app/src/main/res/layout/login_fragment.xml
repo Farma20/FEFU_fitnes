@@ -10,21 +10,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
+        app:layout_constraintGuide_begin="24dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/margin_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
+        app:layout_constraintGuide_end="24dp" />
 
 
     <ImageView
         android:id="@+id/label_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/login_fragment_fefu_label_one_img"
         app:layout_constraintStart_toStartOf="@+id/label_two"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,6 +47,7 @@
         android:drawableStart="@drawable/login_fragment_login_img"
         android:drawablePadding="10dp"
         android:hint="Логин"
+        android:maxLines="1"
         app:layout_constraintEnd_toStartOf="@+id/margin_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/margin_left"
@@ -61,6 +62,7 @@
         android:drawablePadding="10dp"
         android:hint="Пароль"
         android:inputType="textPassword"
+        android:maxLines="1"
         app:layout_constraintEnd_toStartOf="@+id/margin_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/margin_left"
@@ -70,7 +72,7 @@
         android:id="@+id/enter_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/login_fragment_enter_button"
         android:gravity="center"
         android:paddingVertical="12dp"
@@ -89,15 +91,16 @@
         android:layout_marginTop="24dp"
         android:text="Забыли пароль?"
         android:textColor="#412EFE"
-        android:textSize="14sp"
+        android:textSize="19sp"
         app:layout_constraintEnd_toStartOf="@+id/margin_right"
         app:layout_constraintStart_toStartOf="@+id/margin_left"
         app:layout_constraintTop_toBottomOf="@+id/enter_button" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="56dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/margin_right"
         app:layout_constraintStart_toStartOf="@+id/margin_left"
@@ -114,13 +117,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ну и пошел нахуй!"
-            android:textColor="#412EFE"
             android:layout_marginStart="5dp"
+            android:text="Зарегистрируйся!"
+            android:textColor="#412EFE"
             android:textSize="19sp" />
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

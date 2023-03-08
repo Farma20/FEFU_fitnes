@@ -1,11 +1,7 @@
 package com.example.fefu_fitnes.UI.Views
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,17 +9,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.WorkoutInfoDialogRecyclerView
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
-import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.databinding.DialogFragmentWorkoutAllInfoBinding
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.IOException
 
 
 class WorkoutInfoAllDialogFragment(val dialogEventData: UpdateEventDataModel):DialogFragment() {
