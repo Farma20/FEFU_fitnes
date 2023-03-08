@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.fefu_fitnes.databinding.LoginFragmentBinding
+import com.example.fefu_fitnes.databinding.FragmentLoginBinding
 
 class LoginFragment: Fragment() {
-    private var _binding: LoginFragmentBinding? = null
+    private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -16,7 +16,7 @@ class LoginFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = LoginFragmentBinding.inflate(inflater)
+        _binding = FragmentLoginBinding.inflate(inflater)
 
         return binding.root
     }
