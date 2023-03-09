@@ -1,10 +1,9 @@
-package com.example.fefu_fitnes.UI.RegisterUI
+package com.example.fefu_fitnes.UI.Register.UI
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.fefu_fitnes.R
-import com.example.fefu_fitnes.UI.Views.LoginFragment
 import com.example.fefu_fitnes.databinding.ActivityRegisterBinding
 
 class RegisterActivity:AppCompatActivity() {
@@ -32,7 +31,7 @@ class RegisterActivity:AppCompatActivity() {
 
     fun onFragmentSelected(fragment: Fragment){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container_register, fragment)
             .addToBackStack(null)
             .commit()
     }

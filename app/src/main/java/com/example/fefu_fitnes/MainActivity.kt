@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fefu_fitnes.UI.RegisterUI.RegisterActivity
+import com.example.fefu_fitnes.UI.Register.UI.RegisterActivity
 import com.example.fefu_fitnes.UI.ViewModels.MainViewModel
 import com.example.fefu_fitnes.UI.Views.*
 import com.example.fefu_fitnes.databinding.ActivityMainBinding
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
             if(currentFragment == null){
-                val fragment = LoginFragment.newInstance()
+                val fragment = MainMenuFragment.newInstance()
                 supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
             }
         }
