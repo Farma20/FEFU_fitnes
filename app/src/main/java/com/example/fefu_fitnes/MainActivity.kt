@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fefu_fitnes.UI.Register.UI.RegisterActivity
+import com.example.fefu_fitnes.UI.RegisterPackage.UI.RegisterActivity
 import com.example.fefu_fitnes.UI.ViewModels.MainViewModel
 import com.example.fefu_fitnes.UI.Views.*
 import com.example.fefu_fitnes.databinding.ActivityMainBinding

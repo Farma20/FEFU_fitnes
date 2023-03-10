@@ -87,4 +87,11 @@
     </style>
 
 
+    <style name="YellowButton" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/YellowButtonThemeOverlay</item>
+    </style>
+
+    <style name="YellowButtonThemeOverlay">
+        <item name="colorPrimary">#FFC90D</item>
+    </style>
 </resources>

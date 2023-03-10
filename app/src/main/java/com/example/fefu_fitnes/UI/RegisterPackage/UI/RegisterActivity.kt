@@ -1,4 +1,4 @@
-package com.example.fefu_fitnes.UI.Register.UI
+package com.example.fefu_fitnes.UI.RegisterPackage.UI
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

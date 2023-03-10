@@ -1,4 +1,4 @@
-package com.example.fefu_fitnes.UI.Register.Models
+package com.example.fefu_fitnes.UI.RegisterPackage.Models
 
 data class UserEnterModel(
     var userEmail:String ="",

@@ -1,127 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/margin_left"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="24dp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/margin_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/margin_right"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="24dp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/margin_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
 
 
-    <ImageView
-        android:id="@+id/label_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/login_fragment_fefu_label_one_img"
-        app:layout_constraintStart_toStartOf="@+id/label_two"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/label_two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/login_fragment_fefu_label_two_img"
-        app:layout_constraintEnd_toStartOf="@+id/margin_right"
-        app:layout_constraintStart_toStartOf="@+id/margin_left"
-        app:layout_constraintTop_toBottomOf="@+id/label_one" />
-
-    <EditText
-        android:id="@+id/login"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="80dp"
-        android:drawableStart="@drawable/login_fragment_login_img"
-        android:drawablePadding="10dp"
-        android:hint="Логин"
-        android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/margin_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/margin_left"
-        app:layout_constraintTop_toBottomOf="@+id/label_two" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
-        android:drawableStart="@drawable/login_fragment_password_img"
-        android:drawablePadding="10dp"
-        android:hint="Пароль"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/margin_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/margin_left"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
-
-    <TextView
-        android:id="@+id/enter_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/login_fragment_enter_button"
-        android:gravity="center"
-        android:paddingVertical="12dp"
-        android:text="Войти"
-        android:textColor="#FFFFFF"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/margin_right"
-        app:layout_constraintStart_toStartOf="@+id/margin_left"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
-
-    <TextView
-        android:id="@+id/password_recovery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Забыли пароль?"
-        android:textColor="#412EFE"
-        android:textSize="19sp"
-        app:layout_constraintEnd_toStartOf="@+id/margin_right"
-        app:layout_constraintStart_toStartOf="@+id/margin_left"
-        app:layout_constraintTop_toBottomOf="@+id/enter_button" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/margin_right"
-        app:layout_constraintStart_toStartOf="@+id/margin_left"
-        app:layout_constraintTop_toBottomOf="@+id/password_recovery">
-
-        <TextView
-            android:id="@+id/textView6"
+        <ImageView
+            android:id="@+id/label_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нет аккаунта?"
-            android:textSize="19sp" />
+            android:layout_marginTop="40dp"
+            android:background="@drawable/login_fragment_fefu_label_one_img"
+            app:layout_constraintStart_toStartOf="@+id/label_two"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/registration_button"
+        <ImageView
+            android:id="@+id/label_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="Зарегистрируйся!"
-            android:textColor="#412EFE"
-            android:textSize="19sp" />
-    </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/login_fragment_fefu_label_two_img"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/label_one" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:id="@+id/login_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            app:helperTextTextColor="#ff0000"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/label_two">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/main_menu_coach_mail_pic"
+                android:inputType="textEmailAddress"
+                android:hint="Почта"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:helperTextTextColor="#ff0000"
+            app:passwordToggleEnabled="true"
+            app:counterEnabled="true"
+            app:counterMaxLength="18"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/login_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:drawableStart="@drawable/login_fragment_password_img"
+                android:drawablePadding="10dp"
+                android:hint="Пароль"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:maxLength="18"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:theme="@style/YellowButton"
+            android:id="@+id/enter_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:text="Войти"
+            android:textColor="#FFFFFF"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/password_recovery"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            android:text="Забыли пароль?"-->
+<!--            android:textColor="#412EFE"-->
+<!--            android:textSize="19sp"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/margin_right"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/margin_left"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/enter_button" />-->
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/margin_right"
+            app:layout_constraintStart_toStartOf="@+id/margin_left"
+            app:layout_constraintTop_toBottomOf="@+id/enter_button">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Нет аккаунта?"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/registration_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Зарегистрируйся!"
+                android:textColor="#412EFE"
+                android:textSize="19sp" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
