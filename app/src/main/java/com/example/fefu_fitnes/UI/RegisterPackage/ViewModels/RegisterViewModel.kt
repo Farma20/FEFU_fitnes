@@ -52,4 +52,8 @@ class RegisterViewModel: ViewModel() {
     fun pushUserData(){
         RegisterRepository.addNewUser(userRegisterData.value)
     }
+
+    init {
+        userRegisterData.value = UserRegisterModel()
+    }
 }

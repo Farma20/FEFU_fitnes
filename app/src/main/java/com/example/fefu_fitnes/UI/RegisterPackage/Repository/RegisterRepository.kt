@@ -20,4 +20,15 @@ object RegisterRepository: ViewModel() {
         return registerUserList.value
     }
 
+    init {
+        registerUserList.value = mutableListOf(UserRegisterModel(
+            "qwer",
+            "+79024887366",
+            "i@g.c",
+            "М",
+            "15.03.2000",
+            "1234567u"
+        ))
+    }
+
 }

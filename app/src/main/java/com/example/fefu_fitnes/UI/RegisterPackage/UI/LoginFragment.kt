@@ -46,16 +46,11 @@ class LoginFragment: Fragment() {
     override fun onStart() {
         super.onStart()
 
-        //текстЛистенеры
-        binding.login.addTextChangedListener(commonTextWatcher(USER_EMAIL_TAG))
-
         binding.login.setOnFocusChangeListener{_, focused ->
             if (!focused){
                 binding.loginLayout.helperText = validEmail()
             }
         }
-
-        binding.password.addTextChangedListener(commonTextWatcher(USER_PASSWORD_TAG))
 
         binding.password.setOnFocusChangeListener{_, focused ->
             if (!focused){
@@ -68,23 +63,29 @@ class LoginFragment: Fragment() {
         }
 
         binding.enterButton.setOnClickListener{
-            binding.loginLayout.clearFocus()
-            binding.passwordLayout.clearFocus()
-            if (submitForm()){
-                if(loginViewModel.validateLoginData()){
-                    Toast.makeText(
-                        this.context,
-                        "Вы вошли",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                else{
-                    Toast.makeText(
-                        this.context,
-                        "Такого пользователя не найденно, измените введенные данные или зарегистрируйтесь",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            enterButtonValidate()
+        }
+    }
+
+    private fun enterButtonValidate(){
+        binding.loginLayout.clearFocus()
+        binding.passwordLayout.clearFocus()
+        if (submitForm()){
+            loginViewModel.setUserEmail(binding.login.text.toString())
+            loginViewModel.setUserPassword(binding.password.text.toString())
+            if(loginViewModel.validateLoginData()){
+                Toast.makeText(
+                    this.context,
+                    "Вы вошли",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            else{
+                Toast.makeText(
+                    this.context,
+                    "Такого пользователя не найденно, измените введенные данные или зарегистрируйтесь",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -112,23 +113,6 @@ class LoginFragment: Fragment() {
 
         return null
     }
-
-    private fun commonTextWatcher(tag:String):TextWatcher{
-        return object :TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if(tag == USER_EMAIL_TAG)
-                    loginViewModel.setUserEmail(s.toString())
-                if(tag == USER_PASSWORD_TAG)
-                    loginViewModel.setUserPassword(s.toString())
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-            override fun afterTextChanged(s: Editable?) {
-            }
-        }
-    }
-
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

@@ -16,12 +16,6 @@ import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.RegisterPackage.ViewModels.RegisterViewModel
 import com.example.fefu_fitnes.databinding.FragmentRegisterBinding
 
-private const val USER_LOGIN_TAG = "userLogin"
-private const val USER_PHONE_TAG = "userPhone"
-private const val USER_EMAIL_TAG = "userEmail"
-private const val USER_BIRTHDAY_TAG = "userBirthday"
-private const val USER_PASSWORD_TAG = "userPassword"
-
 class RegistrationFragment: Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -47,31 +41,26 @@ class RegistrationFragment: Fragment() {
         binding.registrationRadioMale.isChecked = true
 
         //ТекстЛистенеры
-        binding.login.addTextChangedListener(commonTextWatcher(USER_LOGIN_TAG))
         binding.login.setOnFocusChangeListener{_, focused ->
                 if (!focused){
                     binding.loginLayout.helperText = validLogin()
                 }
             }
-        binding.phone.addTextChangedListener(commonTextWatcher(USER_PHONE_TAG))
         binding.phone.setOnFocusChangeListener{_, focused ->
             if (!focused){
                 binding.phoneLayout.helperText = validPhone()
             }
         }
-        binding.mail.addTextChangedListener(commonTextWatcher(USER_EMAIL_TAG))
         binding.mail.setOnFocusChangeListener{_, focused ->
             if (!focused){
                 binding.mailLayout.helperText = validEmail()
             }
         }
-        binding.birthday.addTextChangedListener(commonTextWatcher(USER_BIRTHDAY_TAG))
         binding.birthday.setOnFocusChangeListener{_, focused ->
             if (!focused){
                 binding.birthdayLayout.helperText = validBirthday()
             }
         }
-        binding.newPasswords.addTextChangedListener(commonTextWatcher(USER_PASSWORD_TAG))
         binding.newPasswords.setOnFocusChangeListener{_, focused ->
             if (!focused){
                 binding.newPasswordsLayout.helperText = validPassword()
@@ -95,22 +84,39 @@ class RegistrationFragment: Fragment() {
         }
 
         binding.registrationButton.setOnClickListener{
-            binding.loginLayout.clearFocus()
-            binding.newPasswordsLayout.clearFocus()
-            binding.repeatPasswordsLayout.clearFocus()
-            binding.birthdayLayout.clearFocus()
-            binding.mailLayout.clearFocus()
-            binding.phoneLayout.clearFocus()
-            if (submitForm()){
-                Toast.makeText(
-                    this.context,
-                    "Вы успешно заригестрированны",
-                    Toast.LENGTH_LONG
-                ).show()
-                registerViewModel.pushUserData()
-            }
+            registrationButtonSubmit()
+
         }
 
+    }
+
+    private fun registrationButtonSubmit(){
+        binding.loginLayout.clearFocus()
+        binding.newPasswordsLayout.clearFocus()
+        binding.repeatPasswordsLayout.clearFocus()
+        binding.birthdayLayout.clearFocus()
+        binding.mailLayout.clearFocus()
+        binding.phoneLayout.clearFocus()
+        if (submitForm()){
+            pushDataInViewModel()
+            Toast.makeText(
+                this.context,
+                "Вы успешно заригестрированны",
+                Toast.LENGTH_LONG
+            ).show()
+            registerViewModel.pushUserData()
+        }
+    }
+
+    private fun pushDataInViewModel(){
+        registerViewModel.setUserLogin(binding.login.text.toString())
+        registerViewModel.setUserPhoneNumber(binding.phone.text.toString())
+        registerViewModel.setUserEmail(binding.mail.text.toString())
+        registerViewModel.setUserBirthday(binding.birthday.text.toString())
+        registerViewModel.setUserPassword(binding.newPasswords.text.toString())
+
+        println("${registerViewModel.getUserLogin()} ${registerViewModel.getUserPhoneNumber()} "+
+            "${registerViewModel.getUserEmail()} ${registerViewModel.getUserBirthday()} ${registerViewModel.getUserPassword()}")
     }
 
     private fun submitForm(): Boolean {
@@ -121,20 +127,16 @@ class RegistrationFragment: Fragment() {
             binding.mailLayout.helperText == null &&
             binding.phoneLayout.helperText == null){
 
-            if( registerViewModel.getUserLogin()!="" &&
-                registerViewModel.getUserPassword()!=""&&
-                registerViewModel.getUserBirthday()!=""&&
-                registerViewModel.getUserEmail()!=""&&
-                registerViewModel.getUserPhoneNumber()!=""){
+            if( binding.login.text.toString() !="" &&
+                binding.newPasswords.text.toString()!=""&&
+                binding.birthday.text.toString()!=""&&
+                binding.mail.text.toString()!=""&&
+                binding.phone.text.toString()!=""){
 
                 return true
             }
             else{
-                println("${registerViewModel.getUserLogin()}," +
-                        " ${registerViewModel.getUserPassword()},"+
-                        "${registerViewModel.getUserBirthday()},"+
-                        "${registerViewModel.getUserEmail()},"+
-                        "${registerViewModel.getUserPhoneNumber()}")
+
                 Toast.makeText(
                     this.context,
                     "Все поля должны быть заполнены",
@@ -213,26 +215,6 @@ class RegistrationFragment: Fragment() {
         return null
     }
 
-    private fun commonTextWatcher(tag:String):TextWatcher{
-        return object :TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if(tag == USER_LOGIN_TAG)
-                    registerViewModel.setUserLogin(s.toString())
-                if(tag == USER_PHONE_TAG)
-                    registerViewModel.setUserPhoneNumber(s.toString())
-                if(tag == USER_EMAIL_TAG)
-                    registerViewModel.setUserEmail(s.toString())
-                if(tag == USER_BIRTHDAY_TAG)
-                    registerViewModel.setUserBirthday(s.toString())
-                if(tag == USER_PASSWORD_TAG)
-                    registerViewModel.setUserPassword(s.toString())
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-            override fun afterTextChanged(s: Editable?) {
-            }
-        }
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
