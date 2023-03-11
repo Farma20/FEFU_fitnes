@@ -9,6 +9,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -70,8 +71,20 @@ class LoginFragment: Fragment() {
             binding.loginLayout.clearFocus()
             binding.passwordLayout.clearFocus()
             if (submitForm()){
-                //вызов метода отправки данных на сервер у ViewModel
-                Unit
+                if(loginViewModel.validateLoginData()){
+                    Toast.makeText(
+                        this.context,
+                        "Вы вошли",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                else{
+                    Toast.makeText(
+                        this.context,
+                        "Такого пользователя не найденно, измените введенные данные или зарегистрируйтесь",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ package com.example.fefu_fitnes.UI.RegisterPackage.ViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserEnterModel
+import com.example.fefu_fitnes.UI.RegisterPackage.Repository.RegisterRepository
 
 class LoginViewModel:ViewModel() {
     private val userEnterData = MutableLiveData<UserEnterModel>()
@@ -24,7 +25,22 @@ class LoginViewModel:ViewModel() {
         return userEnterData.value?.userPassword
     }
 
-    init {
-        userEnterData.value = UserEnterModel()
+    //методы связи с RegisterRepository
+    fun validateLoginData():Boolean{
+        val userList = RegisterRepository.getUserList()
+        val loginEmail = userEnterData.value?.userEmail
+        val loginPassword = userEnterData.value?.userPassword
+
+        if (userList != null && loginEmail!=null && loginPassword!=null) {
+            for (user in userList){
+                println(user)
+                println(userEnterData.value)
+                if (user.userEmail == loginEmail && user.userPassword == loginPassword){
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 }

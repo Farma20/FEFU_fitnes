@@ -107,6 +107,7 @@ class RegistrationFragment: Fragment() {
                     "Вы успешно заригестрированны",
                     Toast.LENGTH_LONG
                 ).show()
+                registerViewModel.pushUserData()
             }
         }
 

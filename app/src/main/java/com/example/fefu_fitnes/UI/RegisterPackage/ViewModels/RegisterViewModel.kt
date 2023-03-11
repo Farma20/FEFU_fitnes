@@ -3,6 +3,7 @@ package com.example.fefu_fitnes.UI.RegisterPackage.ViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserRegisterModel
+import com.example.fefu_fitnes.UI.RegisterPackage.Repository.RegisterRepository
 
 class RegisterViewModel: ViewModel() {
     private val userRegisterData = MutableLiveData<UserRegisterModel>()
@@ -47,7 +48,8 @@ class RegisterViewModel: ViewModel() {
         return userRegisterData.value?.userPassword
     }
 
-    init {
-        userRegisterData.value = UserRegisterModel()
+    //методы связи с RegisterRepository
+    fun pushUserData(){
+        RegisterRepository.addNewUser(userRegisterData.value)
     }
 }
