@@ -2,13 +2,30 @@ package com.example.fefu_fitnes.UI.RegisterPackage.Repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserEnterModel
 import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserRegisterModel
+import com.example.fefu_fitnes.adadadad.WebDataSource.FefuFitRetrofit
+import kotlinx.coroutines.launch
 
 object RegisterRepository: ViewModel() {
 
     private var userInit = MutableLiveData<Boolean>()
 
     private val registerUserList = MutableLiveData<MutableList<UserRegisterModel>>()
+
+
+    fun pushLoginData(loginData: UserEnterModel){
+        viewModelScope.launch {
+            try {
+                FefuFitRetrofit.retrofitService.pushLoginData(loginData)
+                setUserInit(true)
+            }catch (e:Exception){
+                println(e.message)
+            }
+        }
+    }
+
 
     //сеттеры
     fun addNewUser(userData:UserRegisterModel?){

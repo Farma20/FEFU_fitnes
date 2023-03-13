@@ -11,18 +11,22 @@ class LoginViewModel:ViewModel() {
 
     //сетеры
     fun setUserEmail(email:String){
-        userEnterData.value?.userEmail = email
+        userEnterData.value?.email = email
     }
     fun setUserPassword(password: String){
-        userEnterData.value?.userPassword = password
+        userEnterData.value?.pass = password
     }
 
     //геттеры
     fun getUserEmail():String?{
-        return userEnterData.value?.userEmail
+        return userEnterData.value?.email
     }
     fun getUserPassword():String?{
-        return userEnterData.value?.userPassword
+        return userEnterData.value?.pass
+    }
+
+    fun pushLoginData(){
+        userEnterData.value?.let { RegisterRepository.pushLoginData(it) }
     }
 
     //методы связи с RegisterRepository

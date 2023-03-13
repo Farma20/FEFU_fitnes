@@ -64,7 +64,13 @@ class LoginFragment: Fragment() {
         }
 
         binding.enterButton.setOnClickListener{
-            enterButtonValidate()
+//            enterButtonValidate()
+            loginViewModel.setUserEmail(binding.login.text.toString())
+            loginViewModel.setUserPassword(binding.password.text.toString())
+
+            println(loginViewModel.getUserEmail())
+            println(loginViewModel.getUserPassword())
+            loginViewModel.pushLoginData()
         }
     }
 

@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fefu_fitnes.Data.FitnessApi
 import com.example.fefu_fitnes.UI.Models.*
+import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserEnterModel
+import com.example.fefu_fitnes.adadadad.WebDataSource.FefuFitRetrofit
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -30,7 +31,7 @@ object MainRepository: ViewModel() {
         val result = MutableLiveData<UserDataModel>()
         viewModelScope.launch {
             try {
-                val listResult = FitnessApi.retrofitService.getUserData()
+                val listResult = FefuFitRetrofit.retrofitService.getUserData()
 
                 result.postValue(gson.fromJson(listResult, UserDataModel::class.java))
             }catch (e:Exception){
@@ -48,10 +49,10 @@ object MainRepository: ViewModel() {
         val result = MutableLiveData<Array<EventDataModel>>()
         viewModelScope.launch {
             try {
-                val listResult = FitnessApi.retrofitService.getAllEvents()
+                val listResult = FefuFitRetrofit.retrofitService.getAllEvents()
                 result.postValue(gson.fromJson(listResult, Array<EventDataModel>::class.java))
             }catch (e:Exception){
-                println("MainRepository нет соединения с сервером")
+                println("MainRepository нет соединения с сервером!!!!")
             }
         }
         return result
