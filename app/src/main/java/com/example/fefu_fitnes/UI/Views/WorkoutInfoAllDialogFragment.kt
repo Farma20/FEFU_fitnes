@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.WorkoutInfoDialogRecyclerView
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
@@ -18,7 +17,7 @@ import com.example.fefu_fitnes.databinding.DialogFragmentWorkoutAllInfoBinding
 
 class WorkoutInfoAllDialogFragment(val dialogEventData: UpdateEventDataModel):DialogFragment() {
 
-    private lateinit var hostActivity: MainActivity
+    private lateinit var hostActivity: AppActivity
 
     lateinit var recyclerView: RecyclerView
 
@@ -82,7 +81,7 @@ class WorkoutInfoAllDialogFragment(val dialogEventData: UpdateEventDataModel):Di
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        hostActivity = context as MainActivity
+        hostActivity = context as AppActivity
     }
 
     override fun onResume() {

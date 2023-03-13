@@ -1,4 +1,4 @@
-package com.example.fefu_fitnes
+package com.example.fefu_fitnes.UI.Views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,12 +6,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.RegisterPackage.UI.RegisterActivity
 import com.example.fefu_fitnes.UI.ViewModels.MainViewModel
-import com.example.fefu_fitnes.UI.Views.*
 import com.example.fefu_fitnes.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -29,7 +29,12 @@ class MainActivity : AppCompatActivity() {
         //отключение темной темы
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        checkInitialization()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+        if(currentFragment == null){
+            val fragment = MainMenuFragment.newInstance()
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
+        }
 
         binding.main.setBackgroundResource(R.drawable.activity_main_bottom_navigate_main_pick)
 
@@ -68,20 +73,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun checkInitialization(){
-        if(false){
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-
-            if(currentFragment == null){
-                val fragment = MainMenuFragment.newInstance()
-                supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
-            }
-        }
-        else{
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-    }
+//    private fun checkInitialization(){
+//        if(false){
+//            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+//
+//            if(currentFragment == null){
+//                val fragment = MainMenuFragment.newInstance()
+//                supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
+//            }
+//        }
+//        else{
+//            val intent = Intent(this, RegisterActivity::class.java)
+//            startActivity(intent)
+//        }
+//    }
 
     fun onFragmentSelected(fragment: Fragment){
         supportFragmentManager.beginTransaction()

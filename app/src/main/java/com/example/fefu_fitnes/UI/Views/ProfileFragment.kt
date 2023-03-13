@@ -8,13 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.UI.ViewModels.ProfileViewModel
 import com.example.fefu_fitnes.databinding.FragmentProfileBinding
 
 class ProfileFragment: Fragment() {
 
-    private lateinit var hostActivity: MainActivity
+    private lateinit var hostActivity: AppActivity
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +43,7 @@ class ProfileFragment: Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        hostActivity = context as MainActivity
+        hostActivity = context as AppActivity
     }
 
     override fun onDestroyView() {

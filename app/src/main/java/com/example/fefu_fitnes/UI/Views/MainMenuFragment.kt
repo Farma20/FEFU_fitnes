@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.MainMenuRecyclerView
 import com.example.fefu_fitnes.UI.ViewModels.MainMenuViewModel
 import com.example.fefu_fitnes.databinding.FragmentMainMenuBinding
@@ -19,7 +18,7 @@ const val WORKOUT_INFO = "workout_info"
 
 class MainMenuFragment: Fragment() {
 
-    private lateinit var hostActivity: MainActivity
+    private lateinit var hostActivity: AppActivity
 
     private var _binding: FragmentMainMenuBinding? = null
     private val binding get() = _binding!!
@@ -88,7 +87,7 @@ class MainMenuFragment: Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        hostActivity = context as MainActivity
+        hostActivity = context as AppActivity
     }
 
     override fun onDestroyView() {

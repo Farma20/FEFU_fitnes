@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.fefu_fitnes.UI.RegisterPackage.Repository.RegisterRepository
 import com.example.fefu_fitnes.UI.RegisterPackage.ViewModels.LoginViewModel
 import com.example.fefu_fitnes.databinding.FragmentLoginBinding
 
@@ -79,6 +80,7 @@ class LoginFragment: Fragment() {
                     "Вы вошли",
                     Toast.LENGTH_LONG
                 ).show()
+                RegisterRepository.setUserInit(true)
             }
             else{
                 Toast.makeText(

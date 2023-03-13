@@ -31,12 +31,14 @@ object MainRepository: ViewModel() {
         viewModelScope.launch {
             try {
                 val listResult = FitnessApi.retrofitService.getUserData()
+
                 result.postValue(gson.fromJson(listResult, UserDataModel::class.java))
             }catch (e:Exception){
                 println(e)
                 result.postValue(UserDataModel("Юра", "Гослинг", "№583057349", "0 занятий"))
             }
         }
+
         return result
     }
 
@@ -65,7 +67,8 @@ object MainRepository: ViewModel() {
 
         val client = OkHttpClient()
         val body: RequestBody = JSONObject(data).toString().toRequestBody(JSON)
-        val request = Request.Builder().url("http://172.20.10.2/api/booking/addNewBooking").post(body).build()
+        val request = Request.Builder().url("http://172.20.10.2/api/booking/addNewBooking").post(body
+        ).build()
 
         try {
             client.newCall(request).execute().use { response ->
@@ -73,6 +76,7 @@ object MainRepository: ViewModel() {
                     throw IOException("Запрос к серверу не был успешен:" +
                             " ${response.code} ${response.message}")
                 }
+
                 println(response.body!!.string())
             }
         } catch (e: IOException) {

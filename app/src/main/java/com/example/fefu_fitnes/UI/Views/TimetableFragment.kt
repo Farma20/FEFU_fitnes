@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableDateRecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableListRecyclerView
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
@@ -20,7 +19,7 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
 
     private var _binding: FragmentTimetableBinding? = null
     private val binding get() = _binding!!
-    private lateinit var hostActivity: MainActivity
+    private lateinit var hostActivity: AppActivity
     private lateinit var recyclerViewClass: TimetableDateRecyclerView
     private lateinit var recyclerViewListClass: TimetableListRecyclerView
     private var allEventsList = listOf<UpdateEventDataModel>()
@@ -105,7 +104,7 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        hostActivity = context as MainActivity
+        hostActivity = context as AppActivity
     }
 
     override fun onDestroyView() {

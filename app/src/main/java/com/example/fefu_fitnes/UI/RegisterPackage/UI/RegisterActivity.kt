@@ -1,9 +1,12 @@
 package com.example.fefu_fitnes.UI.RegisterPackage.UI
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.fefu_fitnes.R
+import com.example.fefu_fitnes.UI.RegisterPackage.Repository.RegisterRepository
+import com.example.fefu_fitnes.UI.Views.AppActivity
 import com.example.fefu_fitnes.databinding.ActivityRegisterBinding
 
 class RegisterActivity:AppCompatActivity() {
@@ -14,6 +17,13 @@ class RegisterActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        RegisterRepository.getUserInit().observe(this){
+            if (it == true){
+                val intent = Intent(this, AppActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
 

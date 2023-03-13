@@ -6,6 +6,8 @@ import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserRegisterModel
 
 object RegisterRepository: ViewModel() {
 
+    private var userInit = MutableLiveData<Boolean>()
+
     private val registerUserList = MutableLiveData<MutableList<UserRegisterModel>>()
 
     //сеттеры
@@ -15,20 +17,28 @@ object RegisterRepository: ViewModel() {
         }
     }
 
+    fun setUserInit(bool:Boolean){
+        userInit.value = bool
+    }
+
     //геттеры
     fun getUserList(): List<UserRegisterModel>?{
         return registerUserList.value
     }
+    fun getUserInit(): MutableLiveData<Boolean> {
+        return userInit
+    }
 
     init {
         registerUserList.value = mutableListOf(UserRegisterModel(
-            "qwer",
+            "iiii",
             "+79024887366",
-            "i@g.c",
+            "iurban.kustov.200@gmail.com",
             "М",
             "15.03.2000",
-            "1234567u"
+            "1u2u3u4u"
         ))
+        userInit.value = false
     }
 
 }

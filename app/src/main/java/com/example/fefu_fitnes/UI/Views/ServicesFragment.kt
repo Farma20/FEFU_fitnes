@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fefu_fitnes.MainActivity
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.PaymentsRecyclerView
 import com.example.fefu_fitnes.UI.ViewModels.ServicesViewModel
 import com.example.fefu_fitnes.databinding.FragmentPaymentsBinding
@@ -17,7 +16,7 @@ class ServicesFragment: Fragment() {
     private var _binding: FragmentPaymentsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var hostActivity: MainActivity
+    private lateinit var hostActivity: AppActivity
     private lateinit var recyclerViewClass: PaymentsRecyclerView
 
     private val servicesViewModel: ServicesViewModel by lazy {
@@ -46,7 +45,7 @@ class ServicesFragment: Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        hostActivity = context as MainActivity
+        hostActivity = context as AppActivity
     }
 
     override fun onDestroyView() {
