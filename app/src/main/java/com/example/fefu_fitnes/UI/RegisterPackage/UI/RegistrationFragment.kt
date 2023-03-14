@@ -72,9 +72,9 @@ class RegistrationFragment: Fragment() {
             }else{
                 "Ж"
             }
-            view?.findViewById<RadioButton>(checkedId).apply {
-                this?.let { registerViewModel.setUserGender(gender) }
-            }
+//            view?.findViewById<RadioButton>(checkedId).apply {
+//                this?.let { registerViewModel.setUserGender(gender) }
+//            }
         }
 
         binding.repeatPasswords.setOnFocusChangeListener{_, focused ->
@@ -104,19 +104,17 @@ class RegistrationFragment: Fragment() {
                 "Вы успешно заригестрированны",
                 Toast.LENGTH_LONG
             ).show()
-            registerViewModel.pushUserData()
+//            registerViewModel.pushUserData()
+            registerViewModel.registerUser()
         }
     }
 
     private fun pushDataInViewModel(){
         registerViewModel.setUserLogin(binding.login.text.toString())
-        registerViewModel.setUserPhoneNumber(binding.phone.text.toString())
+//        registerViewModel.setUserPhoneNumber(binding.phone.text.toString())
         registerViewModel.setUserEmail(binding.mail.text.toString())
-        registerViewModel.setUserBirthday(binding.birthday.text.toString())
+//        registerViewModel.setUserBirthday(binding.birthday.text.toString())
         registerViewModel.setUserPassword(binding.newPasswords.text.toString())
-
-        println("${registerViewModel.getUserLogin()} ${registerViewModel.getUserPhoneNumber()} "+
-            "${registerViewModel.getUserEmail()} ${registerViewModel.getUserBirthday()} ${registerViewModel.getUserPassword()}")
     }
 
     private fun submitForm(): Boolean {

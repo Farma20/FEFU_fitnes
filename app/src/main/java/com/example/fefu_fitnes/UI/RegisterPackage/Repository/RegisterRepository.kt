@@ -3,9 +3,11 @@ package com.example.fefu_fitnes.UI.RegisterPackage.Repository
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fefu_fitnes.UI.Models.UserDataModel
 import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserEnterModel
 import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserRegisterModel
 import com.example.fefu_fitnes.adadadad.WebDataSource.FefuFitRetrofit
+import com.example.fefu_fitnes.dadadada.Repository.MainRepository
 import kotlinx.coroutines.launch
 
 object RegisterRepository: ViewModel() {
@@ -18,9 +20,23 @@ object RegisterRepository: ViewModel() {
     fun pushLoginData(loginData: UserEnterModel){
         viewModelScope.launch {
             try {
-                FefuFitRetrofit.retrofitService.pushLoginData(loginData)
-                setUserInit(true)
+                val result = FefuFitRetrofit.retrofitService.pushLoginData(loginData)
+                if(result["status"] == "sucsess"){
+                    setUserInit(true)
+                }
+
             }catch (e:Exception){
+                println(e.message)
+            }
+        }
+    }
+
+    fun registerNewUser(registerData:UserRegisterModel){
+        viewModelScope.launch {
+            try {
+                FefuFitRetrofit.retrofitService.registerUser(registerData)
+            }
+            catch (e:Exception){
                 println(e.message)
             }
         }
@@ -33,6 +49,7 @@ object RegisterRepository: ViewModel() {
             registerUserList.value?.add(userData)
         }
     }
+
 
     fun setUserInit(bool:Boolean){
         userInit.value = bool
@@ -47,14 +64,7 @@ object RegisterRepository: ViewModel() {
     }
 
     init {
-        registerUserList.value = mutableListOf(UserRegisterModel(
-            "iiii",
-            "+79024887366",
-            "iurban.kustov.200@gmail.com",
-            "М",
-            "15.03.2000",
-            "1u2u3u4u"
-        ))
+        registerUserList.value = mutableListOf(UserRegisterModel())
         userInit.value = false
     }
 

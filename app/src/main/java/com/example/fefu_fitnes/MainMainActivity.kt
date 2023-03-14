@@ -17,12 +17,13 @@ class MainMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_main)
 
         RegisterRepository.getUserInit().observe(this){
-            if (it == true)
+            if (it == true){
                 setActivity(APP_ACTIVITY)
+            }
+
             else
                 setActivity(REGISTER_ACTIVITY)
         }
-
     }
 
     private fun setActivity(activityName:String){
