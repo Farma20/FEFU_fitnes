@@ -21,6 +21,7 @@ object MainRepository: ViewModel() {
 
     private val currentUser = MutableLiveData<UserDataModel>()
     private val currentNews = MutableLiveData<List<NewsDataModel>>()
+    private val currentUserEvents = MutableLiveData<List<BookingDataModel>>()
     private val currentEvent = MutableLiveData<UpdateEventDataModel>()
     private val allServices = MutableLiveData<List<ServicesModel>>()
     private val allEvent = MutableLiveData<List<UpdateEventDataModel>>()
@@ -58,6 +59,18 @@ object MainRepository: ViewModel() {
         return result
     }
 
+
+    fun getUserEventsFromSever():MutableLiveData<List<BookingDataModel>>{
+        val result = MutableLiveData<List<BookingDataModel>>()
+        viewModelScope.launch {
+            try {
+                result.postValue(FefuFitRetrofit.retrofitService.getUserEvents())
+            }catch (e:Exception){
+                println(e)
+            }
+        }
+        return result
+    }
 
 
     fun postMessage( id: Int){
@@ -129,6 +142,9 @@ object MainRepository: ViewModel() {
 
 
     init {
+
+        currentUserEvents.value = listOf(BookingDataModel())
+
         currentUser.value = UserDataModel("Райан", "Гослинг", "№583057349", "0 занятий")
         currentNews.value = listOf(
             NewsDataModel("Чемпионат АССК по настольному теннису"),

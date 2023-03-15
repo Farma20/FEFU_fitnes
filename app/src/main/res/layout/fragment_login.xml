@@ -92,7 +92,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:theme="@style/YellowButton"
+            style="@style/YellowButton"
             android:id="@+id/enter_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

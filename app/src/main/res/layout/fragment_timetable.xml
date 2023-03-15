@@ -21,7 +21,7 @@
     <View
         android:id="@+id/up_bar"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:background="@drawable/main_menu_up_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -48,9 +48,11 @@
         android:id="@+id/recyclerView"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@+id/up_bar"
+        app:layout_constraintBottom_toTopOf="@+id/buttons_linear_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/up_bar"
         app:layout_constraintTop_toBottomOf="@+id/search_bar" />
@@ -75,6 +77,41 @@
         app:layout_constraintStart_toEndOf="@+id/recyclerView"
         app:layout_constraintTop_toTopOf="@+id/recyclerView" />
 
+    <LinearLayout
+        android:id="@+id/buttons_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/up_bar"
+        app:layout_constraintEnd_toStartOf="@+id/margin_right"
+        app:layout_constraintStart_toStartOf="@+id/margin_left">
+
+        <TextView
+            android:id="@+id/all_events_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="25dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/login_fragment_enter_button"
+            android:layout_marginEnd="10dp"
+            android:text="Все занятия" />
+
+        <TextView
+            android:id="@+id/user_events_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="25dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/login_fragment_enter_button_blue"
+            android:layout_marginLeft="10dp"
+            android:text="Мои занятия" />
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workout_recycler_view"
         android:layout_width="0dp"

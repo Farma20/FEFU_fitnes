@@ -3,6 +3,7 @@ package com.example.fefu_fitnes.UI.ViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.fefu_fitnes.UI.Models.BookingDataModel
 import com.example.fefu_fitnes.UI.Models.EventDataModel
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
@@ -11,6 +12,7 @@ import com.example.fefu_fitnes.dadadada.Repository.MainRepository
 class TimetableViewModel:ViewModel() {
 
     private val allEvents = MutableLiveData<List<UpdateEventDataModel>>()
+    private val currentUserEvents = MutableLiveData<List<BookingDataModel>>()
 
     //геттеры
     fun getEvents():LiveData<List<UpdateEventDataModel>>{
@@ -21,6 +23,7 @@ class TimetableViewModel:ViewModel() {
     fun setMainEvent(workout:UpdateEventDataModel){
         MainRepository.setEvent(workout)
     }
+
 
     override fun onCleared() {
         super.onCleared()
@@ -60,6 +63,13 @@ class TimetableViewModel:ViewModel() {
 
 
     init {
+
+        currentUserEvents.value = listOf(BookingDataModel())
+
+        MainRepository.getUserEventsFromSever().observeForever{
+            currentUserEvents.value = it
+            println(currentUserEvents.value)
+        }
 
         val result = MainRepository.getAllEventFromServer()
         result.observeForever{

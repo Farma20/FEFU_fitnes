@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableDateRecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableListRecyclerView
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
@@ -97,6 +98,16 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
                 }
                 recyclerViewListClass.onStart(dayEventList)
             }
+        }
+
+        binding.allEventsButton.setOnClickListener{
+            it.setBackgroundResource(R.drawable.login_fragment_enter_button)
+            binding.userEventsButton.setBackgroundResource(R.drawable.login_fragment_enter_button_blue)
+        }
+
+        binding.userEventsButton.setOnClickListener{
+            it.setBackgroundResource(R.drawable.login_fragment_enter_button)
+            binding.allEventsButton.setBackgroundResource(R.drawable.login_fragment_enter_button_blue)
         }
 
 

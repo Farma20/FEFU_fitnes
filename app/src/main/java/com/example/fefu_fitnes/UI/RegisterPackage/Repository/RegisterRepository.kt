@@ -65,7 +65,7 @@ object RegisterRepository: ViewModel() {
 
     init {
         registerUserList.value = mutableListOf(UserRegisterModel())
-        userInit.value = false
+        userInit.value = true
     }
 
 }
