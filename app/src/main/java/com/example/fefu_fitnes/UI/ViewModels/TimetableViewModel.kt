@@ -12,11 +12,15 @@ import com.example.fefu_fitnes.dadadada.Repository.MainRepository
 class TimetableViewModel:ViewModel() {
 
     private val allEvents = MutableLiveData<List<UpdateEventDataModel>>()
-    private val currentUserEvents = MutableLiveData<List<BookingDataModel>>()
+    private val userEvents = MutableLiveData<List<BookingDataModel>>()
 
     //геттеры
     fun getEvents():LiveData<List<UpdateEventDataModel>>{
         return allEvents
+    }
+
+    fun getUserEvents():LiveData<List<BookingDataModel>>{
+        return userEvents
     }
 
     //Передача выбранной тренировки
@@ -64,11 +68,10 @@ class TimetableViewModel:ViewModel() {
 
     init {
 
-        currentUserEvents.value = listOf(BookingDataModel())
+        userEvents.value = listOf(BookingDataModel())
 
         MainRepository.getUserEventsFromSever().observeForever{
-            currentUserEvents.value = it
-            println(currentUserEvents.value)
+            userEvents.value = it
         }
 
         val result = MainRepository.getAllEventFromServer()

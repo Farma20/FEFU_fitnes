@@ -1,6 +1,9 @@
 package com.example.fefu_fitnes.UI.Views
 
+import android.R.attr.button
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableDateRecyclerView
 import com.example.fefu_fitnes.UI.Controllers.RecyclerViews.TimetableListRecyclerView
+import com.example.fefu_fitnes.UI.Models.BookingDataModel
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
 import com.example.fefu_fitnes.UI.ViewModels.TimetableViewModel
 import com.example.fefu_fitnes.databinding.FragmentTimetableBinding
-
 
 
 class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
@@ -24,6 +27,10 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     private lateinit var recyclerViewClass: TimetableDateRecyclerView
     private lateinit var recyclerViewListClass: TimetableListRecyclerView
     private var allEventsList = listOf<UpdateEventDataModel>()
+    private var userEventsList = listOf<BookingDataModel>()
+    private var dayEventList = mutableListOf<UpdateEventDataModel>()
+
+    private var firstButtonsCheck = true
 
     private val timetableViewModel: TimetableViewModel by lazy {
         ViewModelProvider(this)[TimetableViewModel::class.java]
@@ -45,14 +52,6 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     ): View {
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
 
-//        val result = hostActivity.mainViewModel.getWorkout()
-//        result.observe(this.viewLifecycleOwner) { res ->
-//
-//            hostActivity.mainViewModel.allWorkout = res.asList()
-//            updateUI()
-//            updateWorkoutUI()
-//        }
-
         recyclerViewClass = TimetableDateRecyclerView(inflater, binding.recyclerView)
 
         recyclerViewListClass = TimetableListRecyclerView(
@@ -60,6 +59,26 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
             this,
             binding.workoutRecyclerView
         )
+
+        timetableViewModel.getUserEvents().observe(viewLifecycleOwner){list->
+            userEventsList = list
+        }
+
+        timetableViewModel.getEvents().observe(viewLifecycleOwner){list ->
+            allEventsList = list
+
+            recyclerViewClass.getCurrentData().observe(viewLifecycleOwner){ day ->
+                dayEventList = mutableListOf<UpdateEventDataModel>()
+                for(item in allEventsList){
+                    if (item.date.toInt() == day)
+                        dayEventList.add(item)
+                }
+                if(firstButtonsCheck)
+                    updateAllEventsList()
+                else
+                    updateUserEventsList()
+            }
+        }
 
         return binding.root
     }
@@ -87,30 +106,45 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
 
         recyclerViewClass.onStart()
 
-        recyclerViewClass.getCurrentData().observe(this){ day ->
-            timetableViewModel.getEvents().observe(this){list ->
-                allEventsList = list
-                val dayEventList = mutableListOf<UpdateEventDataModel>()
-                for(item in allEventsList){
-                    if (item.date.toInt() == day) {
-                        dayEventList.add(item)
-                    }
-                }
-                recyclerViewListClass.onStart(dayEventList)
-            }
-        }
+        updateAllEventsList()
 
         binding.allEventsButton.setOnClickListener{
             it.setBackgroundResource(R.drawable.login_fragment_enter_button)
             binding.userEventsButton.setBackgroundResource(R.drawable.login_fragment_enter_button_blue)
+            setActiveButton(true)
+
+            updateAllEventsList()
         }
 
         binding.userEventsButton.setOnClickListener{
             it.setBackgroundResource(R.drawable.login_fragment_enter_button)
             binding.allEventsButton.setBackgroundResource(R.drawable.login_fragment_enter_button_blue)
+            setActiveButton(false)
+            updateUserEventsList()
         }
 
 
+    }
+
+    private fun updateUserEventsList() {
+        val indexes = mutableListOf<Int>()
+        for(item in userEventsList)
+            indexes.add(item.eventId)
+
+        val events = mutableListOf<UpdateEventDataModel>()
+        for(item in dayEventList){
+            if (item.eventId in indexes)
+                events.add(item)
+        }
+        recyclerViewListClass.onStart(events)
+    }
+
+    private fun setActiveButton(state:Boolean){
+        firstButtonsCheck = state
+    }
+
+    private fun updateAllEventsList() {
+            recyclerViewListClass.onStart(dayEventList)
     }
 
     override fun onAttach(context: Context) {

@@ -17,8 +17,11 @@ class TimetableDateRecyclerView(
     val inflater: LayoutInflater,
     private val dateRecyclerView: RecyclerView){
 
-    private var currentData = MutableLiveData<Int>()
+    private var currentData = MutableLiveData<Int>().apply {
+        value = 3
+    }
     private var allRecyclerItems = mutableListOf<View>()
+
 
     val myLinearLayoutManager = object :
         LinearLayoutManager(inflater.context, LinearLayoutManager.HORIZONTAL, false) {
@@ -41,7 +44,6 @@ class TimetableDateRecyclerView(
     fun onStart(){
         dateRecyclerView.layoutManager = myLinearLayoutManager
         dateRecyclerView.adapter = RecyclerViewAdapter(recyclerViewConstants)
-        currentData.value = 3
     }
 
     fun getCurrentData(): LiveData<Int> {
