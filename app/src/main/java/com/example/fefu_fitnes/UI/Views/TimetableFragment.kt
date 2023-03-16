@@ -1,9 +1,6 @@
 package com.example.fefu_fitnes.UI.Views
 
-import android.R.attr.button
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -122,8 +119,6 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
             setActiveButton(false)
             updateUserEventsList()
         }
-
-
     }
 
     private fun updateUserEventsList() {

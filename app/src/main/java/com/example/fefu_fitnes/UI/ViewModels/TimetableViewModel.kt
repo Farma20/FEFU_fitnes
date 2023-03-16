@@ -60,7 +60,6 @@ class TimetableViewModel:ViewModel() {
                 event.eventDescription
             )
             updateEventDataModels.add(uEventDataModel)
-            println(dateDay)
         }
         return updateEventDataModels
     }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fefu_fitnes.R
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.UI.Views.TimetableFragment
+import java.util.Calendar
 
 class TimetableDateRecyclerView(
     val inflater: LayoutInflater,
@@ -22,6 +23,9 @@ class TimetableDateRecyclerView(
     }
     private var allRecyclerItems = mutableListOf<View>()
 
+    private val calendar:Calendar = Calendar.getInstance()
+    private var mondayNumber = calendar.get(Calendar.DAY_OF_MONTH) - calendar.get(Calendar.DAY_OF_WEEK)
+//    private var sundayNumber = calendar.get(Calendar.DAY_OF_MONTH) + calendar.get(Calendar.DAY_OF_WEEK) - 2
 
     val myLinearLayoutManager = object :
         LinearLayoutManager(inflater.context, LinearLayoutManager.HORIZONTAL, false) {
@@ -31,19 +35,38 @@ class TimetableDateRecyclerView(
         }
     }
 
-    private val recyclerViewConstants = listOf(
-        mutableListOf("пн", "27", "false"), mutableListOf("вт", "28", "false"), mutableListOf("ср", "1", "false"), mutableListOf("чт", "2", "false"),
-        mutableListOf("пт", "3", "true"), mutableListOf("сб", "4", "false"), mutableListOf("вс", "5", "false"), mutableListOf("пн", "6", "false"),
-        mutableListOf("вт", "7", "false"), mutableListOf("ср", "8", "false"), mutableListOf("чт", "9", "false"), mutableListOf("пт", "10", "false"),
-        mutableListOf("сб", "11", "false"), mutableListOf("вс", "12", "false"), mutableListOf("пн", "13", "false"), mutableListOf("вт", "14", "false"),
-        mutableListOf("ср", "15", "false"), mutableListOf("чт", "16", "false"), mutableListOf("пт", "17", "false"), mutableListOf("сб", "18", "false"),
-        mutableListOf("вс", "19", "false"), mutableListOf("пн", "20", "false"), mutableListOf("вт", "21", "false"), mutableListOf("ср", "22", "false"),
-        mutableListOf("чт", "23", "false"), mutableListOf("пт", "24", "false"), mutableListOf("сб", "25", "false"), mutableListOf("вс", "26", "false"),
-    )
+    private val convertNumInDay = mapOf<Int, String>(1 to "пн", 2 to "вт", 3 to "ср", 4 to "чт", 5 to "пт", 6 to "сб", 7 to "вс")
+
+
+    private val recyclerViewConstants = dateConverter()
+
+    private fun dateConverter(): MutableList<MutableList<String>> {
+        val allDate = mutableListOf<MutableList<String>>()
+        val monthDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentDayNumber = calendar.get(Calendar.DAY_OF_WEEK)-1
+
+        val monday = monthDay - currentDayNumber + 1
+
+        for(day in 1..7){
+            val dayNumber = monday + day - 1
+            var currentDay = false
+            if (dayNumber == monthDay)
+                currentDay = true
+
+            allDate.add(mutableListOf("${convertNumInDay[day]}", "$dayNumber", "$currentDay") )
+        }
+        return allDate
+    }
 
     fun onStart(){
         dateRecyclerView.layoutManager = myLinearLayoutManager
         dateRecyclerView.adapter = RecyclerViewAdapter(recyclerViewConstants)
+
+
+        //Нужно получать количество дней в текущем месяце
+        //Нужно получать текущий день
+        //Нужно получать название дней в конкретных числах
+
     }
 
     fun getCurrentData(): LiveData<Int> {
