@@ -51,6 +51,7 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
 
         recyclerViewClass = TimetableDateRecyclerView(inflater, binding.recyclerView)
 
+
         recyclerViewListClass = TimetableListRecyclerView(
             inflater,
             this,
@@ -86,19 +87,18 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
         var recyclerItemCurrentPosition = 6
 
         binding.dateButtonForward.setOnClickListener {
-            if (recyclerItemCurrentPosition != 27)
-                recyclerItemCurrentPosition +=7
-
-            binding.recyclerView.scrollToPosition(recyclerItemCurrentPosition)
+            recyclerViewClass.nextWeak()
+            recyclerViewClass.onStart()
         }
 
         binding.dateButtonBack.setOnClickListener {
-            if (recyclerItemCurrentPosition - 7 > 0)
-                recyclerItemCurrentPosition -=7
-            else
-                recyclerItemCurrentPosition = 6
+            recyclerViewClass.prevWeak()
+            recyclerViewClass.onStart()
+        }
 
-            binding.recyclerView.scrollToPosition(recyclerItemCurrentPosition-6)
+        //наблюдатель за изменением текущего месяца
+        recyclerViewClass.getMonth().observe(viewLifecycleOwner){
+            binding.currentMonth.text = it.toString()
         }
 
         recyclerViewClass.onStart()

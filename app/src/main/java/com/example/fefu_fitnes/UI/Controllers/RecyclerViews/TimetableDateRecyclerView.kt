@@ -14,9 +14,45 @@ import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.UI.Views.TimetableFragment
 import java.util.Calendar
 
+private val convertNumInDay = mapOf<Int, String>(1 to "пн", 2 to "вт", 3 to "ср", 4 to "чт", 5 to "пт", 6 to "сб", 7 to "вс")
+
+private val convertNumInMonth = mapOf<Int, String>(
+    0 to "Январь",
+    1 to "Фервраль",
+    2 to "Март",
+    3 to "Апрель",
+    4 to "Май",
+    5 to "Июнь",
+    6 to "Июль",
+    7 to "Август",
+    8 to "Сентябрь",
+    9 to "Октябрь",
+    10 to "Ноябрь",
+    11 to "Декабрь",
+)
+
+private val getMonthInDayCount = mapOf<Int, Int>(
+    0 to 31,
+    1 to 28,
+    2 to 31,
+    3 to 30,
+    4 to 31,
+    5 to 30,
+    6 to 31,
+    7 to 31,
+    8 to 30,
+    9 to 31,
+    10 to 30,
+    11 to 31,
+)
+
+
 class TimetableDateRecyclerView(
     val inflater: LayoutInflater,
     private val dateRecyclerView: RecyclerView){
+
+    private var changeMonth = 0
+    private var changeDay = 0
 
     private var currentData = MutableLiveData<Int>().apply {
         value = 3
@@ -24,10 +60,18 @@ class TimetableDateRecyclerView(
     private var allRecyclerItems = mutableListOf<View>()
 
     private val calendar:Calendar = Calendar.getInstance()
-    private var mondayNumber = calendar.get(Calendar.DAY_OF_MONTH) - calendar.get(Calendar.DAY_OF_WEEK)
-//    private var sundayNumber = calendar.get(Calendar.DAY_OF_MONTH) + calendar.get(Calendar.DAY_OF_WEEK) - 2
 
-    val myLinearLayoutManager = object :
+    private var monthNumber = calendar.get(Calendar.MONTH)
+
+    //перменная, хранящая название текущего месяца
+    private val monthName = MutableLiveData<String>().apply {
+        value = convertNumInMonth[monthNumber]
+    }
+
+    //Переменная, храняща число текущего понедельника
+    private var mondayNumber = calendar.get(Calendar.DAY_OF_MONTH) - calendar.get(Calendar.DAY_OF_WEEK) + 2
+
+    private val myLinearLayoutManager = object :
         LinearLayoutManager(inflater.context, LinearLayoutManager.HORIZONTAL, false) {
 
         override fun canScrollHorizontally(): Boolean {
@@ -35,37 +79,75 @@ class TimetableDateRecyclerView(
         }
     }
 
-    private val convertNumInDay = mapOf<Int, String>(1 to "пн", 2 to "вт", 3 to "ср", 4 to "чт", 5 to "пт", 6 to "сб", 7 to "вс")
 
-
-    private val recyclerViewConstants = dateConverter()
+    private var recyclerViewConstants = dateConverter()
 
     private fun dateConverter(): MutableList<MutableList<String>> {
         val allDate = mutableListOf<MutableList<String>>()
-        val monthDay = calendar.get(Calendar.DAY_OF_MONTH)
-        val currentDayNumber = calendar.get(Calendar.DAY_OF_WEEK)-1
-
-        val monday = monthDay - currentDayNumber + 1
-
+        val monthDay = getMonthInDayCount[monthNumber]
         for(day in 1..7){
-            val dayNumber = monday + day - 1
+            var dayNumber = mondayNumber + day - 1
+
+            if(dayNumber > monthDay!!){
+                dayNumber -= monthDay
+                changeMonth = 1
+                changeDay++
+                println("_________________________${changeMonth}_____________________________________")
+            }
+
+            if(dayNumber < 1){
+                dayNumber += getMonthInDayCount[monthNumber-1]!!
+                changeMonth = -1
+                changeDay++
+                println("_________________________${changeMonth}_____________________________________")
+            }
+
             var currentDay = false
-            if (dayNumber == monthDay)
+            if (dayNumber == calendar.get(Calendar.DAY_OF_MONTH))
                 currentDay = true
 
-            allDate.add(mutableListOf("${convertNumInDay[day]}", "$dayNumber", "$currentDay") )
+            allDate.add(mutableListOf("${convertNumInDay[day]}", "$dayNumber", "$currentDay"))
         }
+
+        if (changeDay > 3)
+            if(changeMonth == -1)
+                monthName.value = convertNumInMonth[monthNumber-1]
+            else
+                monthName.value = convertNumInMonth[monthNumber+1]
+            changeDay = 0
+
         return allDate
+    }
+
+    fun nextWeak(){
+        if(changeMonth == 1){
+            mondayNumber -= getMonthInDayCount[monthNumber]!!
+            monthNumber += 1
+            monthName.value = convertNumInMonth[monthNumber]
+            changeMonth = 0
+        }
+        mondayNumber += 7
+        recyclerViewConstants = dateConverter()
+    }
+
+    fun prevWeak(){
+        if(changeMonth == -1){
+            monthNumber -= 1
+            mondayNumber += getMonthInDayCount[monthNumber]!!
+            monthName.value = convertNumInMonth[monthNumber]
+            changeMonth = 0
+        }
+        mondayNumber -= 7
+        recyclerViewConstants = dateConverter()
+    }
+
+    fun getMonth(): LiveData<String> {
+        return monthName
     }
 
     fun onStart(){
         dateRecyclerView.layoutManager = myLinearLayoutManager
         dateRecyclerView.adapter = RecyclerViewAdapter(recyclerViewConstants)
-
-
-        //Нужно получать количество дней в текущем месяце
-        //Нужно получать текущий день
-        //Нужно получать название дней в конкретных числах
 
     }
 
