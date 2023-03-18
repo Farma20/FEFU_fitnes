@@ -14,6 +14,7 @@ import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.UI.Views.TimetableFragment
 import java.time.LocalDate
 import java.util.Calendar
+import kotlin.properties.Delegates
 import kotlin.time.Duration.Companion.days
 
 private val convertNumInDay = mapOf<Int, String>(1 to "пн", 2 to "вт", 3 to "ср", 4 to "чт", 5 to "пт", 6 to "сб", 7 to "вс")
@@ -33,6 +34,7 @@ private val convertNumInMonth = mapOf<Int, String>(
     12 to "Декабрь",
 )
 
+data class HolderData(var dayName :String, var dayData: LocalDate, var daySelected: Boolean)
 
 class TimetableDateRecyclerView(
     val inflater: LayoutInflater,
@@ -43,7 +45,7 @@ class TimetableDateRecyclerView(
     private var currentDate = LocalDate.now()
     private var monday = currentDate.minusDays((currentDate.dayOfWeek.value - 1).toLong())
     private var sunday = monday.plusDays(6)
-    private var currentMonth = currentDate.month.value
+    private var selectData = LocalDate.now()
     private var viewMonth = currentDate.month.value
     private var daysOfAnotherMonthCount = 0
 
@@ -52,8 +54,8 @@ class TimetableDateRecyclerView(
         value = convertNumInMonth[viewMonth]
     }
 
-    private var currentData = MutableLiveData<Int>().apply {
-        value = 0
+    private var currentData = MutableLiveData<LocalDate>().apply {
+        value = LocalDate.now()
     }
 
 
@@ -70,25 +72,20 @@ class TimetableDateRecyclerView(
     private var recyclerViewConstants = dateConverter()
 
 
-    private fun dateConverter(): MutableList<MutableList<String>> {
-        val allDate = mutableListOf<MutableList<String>>()
+    private fun dateConverter(): MutableList<HolderData> {
+        val allDate = mutableListOf<HolderData>()
 
         for(day in 1..7){
 
-            var dayNumber = monday.dayOfMonth + day - 1
+            val dayDate = monday.plusDays(day.toLong() - 1)
 
-            if(dayNumber > monday.lengthOfMonth()){
-                dayNumber -= monday.lengthOfMonth()
+            if(dayDate.month != monday.month){
                 daysOfAnotherMonthCount++
             }
 
-            val selected = if(dayNumber == currentDate.dayOfMonth && currentMonth == viewMonth){
-                "true"
-            }else{
-                "false"
-            }
+            val selected = dayDate == selectData
 
-            allDate.add(mutableListOf("${convertNumInDay[day]}", "$dayNumber", selected))
+            allDate.add(HolderData("${convertNumInDay[day]}", dayDate, selected))
         }
 
 
@@ -132,11 +129,11 @@ class TimetableDateRecyclerView(
 
     }
 
-    fun getCurrentData(): LiveData<Int> {
+    fun getCurrentData(): LiveData<LocalDate> {
         return currentData
     }
 
-    private inner class RecyclerViewAdapter(val data:List<MutableList<String>>):
+    private inner class RecyclerViewAdapter(val data:MutableList<HolderData>):
         RecyclerView.Adapter<RecyclerViewHolder>(){
         @SuppressLint("SetTextI18n")
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -148,28 +145,31 @@ class TimetableDateRecyclerView(
 
 
         override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-//            if (position == 4)
-//                holder.parent.setBackgroundResource(R.drawable.timetable_item_day_checked)
             allRecyclerItems.add(holder.parent)
             holder.parent.setBackgroundResource(R.drawable.timetable_item_day_unchecked)
-            if(data[position][2] == "true"){
+
+            if(data[position].daySelected){
                 holder.parent.setBackgroundResource(R.drawable.timetable_item_day_checked)
             }
+
             holder.parent.setOnClickListener{
                 for(item in allRecyclerItems){
                     item.setBackgroundResource(R.drawable.timetable_item_day_unchecked)
                 }
 
-                data[position][2] = "true"
-                currentData.value = data[position][1].toInt()
+                currentData.value = data[position].dayData
 
                 for (pos in data.indices){
                     if(data[pos] !=  data[position]){
-                        data[pos][2] = "false"
+                        data[pos].daySelected = false
                     }
                 }
 
-                if(data[position][2] == "true"){
+                data[position].daySelected = true
+                selectData = data[position].dayData
+
+
+                if(data[position].daySelected){
                     holder.parent.setBackgroundResource(R.drawable.timetable_item_day_checked)
                 }
                 else{
@@ -177,17 +177,15 @@ class TimetableDateRecyclerView(
                 }
             }
 
-
             holder.apply {
-                textDay.text = data[position][0]
-                textNumber.text = data[position][1]
+                textDay.text = data[position].dayName
+                textNumber.text = data[position].dayData.dayOfMonth.toString()
             }
         }
 
         override fun getItemCount(): Int {
             return data.count()
         }
-
     }
 
     private inner class RecyclerViewHolder(view: View):RecyclerView.ViewHolder(view){

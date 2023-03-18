@@ -33,9 +33,10 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
         ViewModelProvider(this)[TimetableViewModel::class.java]
     }
 
-    override fun onWorkoutSelected( i: Int ) {
-            for(event in allEventsList){
+    override fun onWorkoutSelected(i: Int ) {
+        for(event in allEventsList){
             if (event.eventId == i){
+                timetableViewModel.pushNewBooking(event.eventId)
                 timetableViewModel.setMainEvent(event)
                 break
             }
@@ -50,7 +51,6 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
         _binding = FragmentTimetableBinding.inflate(inflater, container, false)
 
         recyclerViewClass = TimetableDateRecyclerView(inflater, binding.recyclerView)
-
 
         recyclerViewListClass = TimetableListRecyclerView(
             inflater,
@@ -68,7 +68,7 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
             recyclerViewClass.getCurrentData().observe(viewLifecycleOwner){ day ->
                 dayEventList = mutableListOf<UpdateEventDataModel>()
                 for(item in allEventsList){
-                    if (item.date.toInt() == day)
+                    if (item.date == day)
                         dayEventList.add(item)
                 }
                 if(firstButtonsCheck)
@@ -84,7 +84,6 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     override fun onStart() {
         super.onStart()
 
-        var recyclerItemCurrentPosition = 6
 
         binding.dateButtonForward.setOnClickListener {
             recyclerViewClass.nextWeak()
@@ -114,6 +113,10 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
         }
 
         binding.userEventsButton.setOnClickListener{
+
+            timetableViewModel.getUserEvents().observe(viewLifecycleOwner){list->
+                userEventsList = list
+            }
             it.setBackgroundResource(R.drawable.login_fragment_enter_button)
             binding.allEventsButton.setBackgroundResource(R.drawable.login_fragment_enter_button_blue)
             setActiveButton(false)
@@ -139,7 +142,7 @@ class TimetableFragment: Fragment(), WorkoutInfoAllDialogFragment.Callback {
     }
 
     private fun updateAllEventsList() {
-            recyclerViewListClass.onStart(dayEventList)
+        recyclerViewListClass.onStart(dayEventList)
     }
 
     override fun onAttach(context: Context) {

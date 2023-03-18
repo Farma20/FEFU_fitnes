@@ -8,6 +8,7 @@ import com.example.fefu_fitnes.UI.Models.EventDataModel
 import com.example.fefu_fitnes.UI.Models.UpdateEventDataModel
 import com.example.fefu_fitnes.UI.Models.WorkoutDataModel
 import com.example.fefu_fitnes.dadadada.Repository.MainRepository
+import java.time.LocalDate
 
 class TimetableViewModel:ViewModel() {
 
@@ -28,6 +29,10 @@ class TimetableViewModel:ViewModel() {
         MainRepository.setEvent(workout)
     }
 
+    fun pushNewBooking(bookingId: Int){
+        MainRepository.pushNewBookingOnServer(bookingId)
+    }
+
 
     override fun onCleared() {
         super.onCleared()
@@ -39,16 +44,18 @@ class TimetableViewModel:ViewModel() {
 
             val startDateTime:List<String> = event.beginTime.split("\\s".toRegex())
             val endDateTime: List<String> = event.endTime.split("\\s".toRegex())
-            val dateDay: String = if(startDateTime[0][startDateTime[0].length-2] != '0'){
-                startDateTime[0].substring(startDateTime[0].length - 2)
-            }else{
-                startDateTime[0].substring(startDateTime[0].length - 2)[1].toString()
-            }
+            val dateList = startDateTime[0].split("-")
+            val date = LocalDate.of(dateList[0].toInt(), dateList[1].toInt(), dateList[2].toInt())
+//            val dateDay: String = if(startDateTime[0][startDateTime[0].length-2] != '0'){
+//                startDateTime[0].substring(startDateTime[0].length - 2)
+//            }else{
+//                startDateTime[0].substring(startDateTime[0].length - 2)[1].toString()
+//            }
 
             val uEventDataModel = UpdateEventDataModel(
                 event.eventId,
                 event.eventName,
-                dateDay,
+                date,
                 startDateTime[1].substring(0, startDateTime[1].length - 3),
                 endDateTime[1].substring(0, endDateTime[1].length - 3),
                 event.eventLocation,
@@ -73,8 +80,7 @@ class TimetableViewModel:ViewModel() {
             userEvents.value = it
         }
 
-        val result = MainRepository.getAllEventFromServer()
-        result.observeForever{
+        MainRepository.getAllEventFromServer().observeForever{
             MainRepository.setAllEvents(convertEvents(it.toList()))
         }
 

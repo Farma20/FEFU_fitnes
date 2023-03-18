@@ -1,6 +1,7 @@
 package com.example.fefu_fitnes.adadadad.WebDataSource
 
 import com.example.fefu_fitnes.UI.Models.BookingDataModel
+import com.example.fefu_fitnes.UI.Models.NewBookingDataModel
 import com.example.fefu_fitnes.UI.Models.UserDataModel
 import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserEnterModel
 import com.example.fefu_fitnes.UI.RegisterPackage.Models.UserRegisterModel
@@ -24,4 +25,7 @@ interface FefuFitAPI {
 
     @POST("/api/user/signup")
     suspend fun registerUser(@Body registerData:UserRegisterModel)
+
+    @POST("/api/booking/addNewBooking")
+    suspend fun newBooking(@Body newBooking: NewBookingDataModel)
 }
